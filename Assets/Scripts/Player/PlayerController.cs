@@ -26,11 +26,15 @@ public class PlayerController : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if(context.phase == InputActionPhase.Canceled)
+        // 점프 키를 뗐을때 호출되도록 설정
+        if(context.phase == InputActionPhase.Canceled) 
         {
             OnJumpEvent?.Invoke();
         }
     }
 
-    
+    public void OnLook(InputAction.CallbackContext context)
+    {
+        OnLookEvent?.Invoke(context.ReadValue<Vector2>());
+    }
 }
