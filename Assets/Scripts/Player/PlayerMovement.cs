@@ -25,10 +25,11 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector3 move = Vector3.forward * movement.y + Vector3.right * movement.x;
+        Vector3 move = transform.forward * movement.y + transform.right * movement.x;
         move *= speed;
         move.y = rb.velocity.y;
-        rb.velocity = move;        
+        
+        rb.velocity = move;
     }
 
 
