@@ -5,11 +5,11 @@ using UnityEngine.UI;
 [RequireComponent(typeof(StatusStat))]
 public class UIStatusBar : MonoBehaviour
 {
-    Image fillBar;
+    [SerializeField] Image fillBar;
 
     void Awake()
     {
-        fillBar = GetComponent<Image>();
+        fillBar = GetComponentInChildren<Image>();
     }
 
     void Start()

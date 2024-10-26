@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerController))]
@@ -5,14 +6,17 @@ public class PlayerInteraction : MonoBehaviour
 {
     PlayerController controller;
     Camera cam;
+
     [Header("Interaction")]
     [SerializeField] float detectRate;
     [SerializeField] float maxDistance;
     [SerializeField] LayerMask interactLayerMask;
 
     float lastDetectTime;
+    GameObject item;
 
-    [SerializeField] GameObject item;
+    public event Action<ItemData> OnDetectItem;
+
 
     void Awake()
     {
@@ -42,12 +46,17 @@ public class PlayerInteraction : MonoBehaviour
                 UpdateUI(itemObject);
             }
         }
+        else
+        {
+            OnDetectItem?.Invoke(null);
+        }
     }
 
     
     void UpdateUI(ItemObject itemObject)
     {
-        Debug.Log($"{itemObject.data.title} / {itemObject.data.description}");
+        // Debug.Log($"{itemObject.data.title} / {itemObject.data.description}");
+        OnDetectItem?.Invoke(itemObject.data);
     }
 
     void Interact()
