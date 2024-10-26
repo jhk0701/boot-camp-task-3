@@ -37,4 +37,13 @@ public class PlayerController : MonoBehaviour
     {
         OnLookEvent?.Invoke(context.ReadValue<Vector2>());
     }
+
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if(context.phase == InputActionPhase.Started)
+        {
+            OnInteractEvent?.Invoke();
+        }
+    }
+
 }

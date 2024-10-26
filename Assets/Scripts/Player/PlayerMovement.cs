@@ -1,14 +1,18 @@
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerController))]
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
 {
-    Rigidbody rb;
     PlayerController controller;
+    Rigidbody rb;
+
+    Vector2 movement;
 
     [SerializeField] float speed = 5f;
     [SerializeField] float jumpPower = 5f;
     [SerializeField] LayerMask jumpableLayerMask;
-    Vector2 movement;
+
 
     void Awake()
     {
