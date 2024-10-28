@@ -2,8 +2,11 @@ using System.Collections;
 using UnityEngine;
 
 
-public class Player : MonoBehaviour, IDamagable
+public class Player : Singleton<Player>, IDamagable
 {
+    [HideInInspector] public PlayerController inputController;
+
+
     [Header("Status Stat")]
     // 인스펙터에서 직접 할당함
     public StatusStat health;
@@ -29,7 +32,7 @@ public class Player : MonoBehaviour, IDamagable
 
     void Awake()
     {
-        PlayerManager.Instance.player = this;
+        inputController = GetComponent<PlayerController>();
     }
 
     void Update()

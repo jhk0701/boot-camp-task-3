@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public event Action<Vector2> OnMoveEvent;
+    public event Action<bool> OnRunEvent;
     public event Action OnJumpEvent;
     public event Action OnInteractEvent;
     public event Action<Vector2> OnLookEvent;
@@ -16,10 +17,7 @@ public class PlayerController : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         if(context.phase == InputActionPhase.Performed)
-        {
-            Vector2 input = context.ReadValue<Vector2>();
-            OnMoveEvent?.Invoke(input);
-        }
+            OnMoveEvent?.Invoke(context.ReadValue<Vector2>());
         else if(context.phase == InputActionPhase.Canceled)
             OnMoveEvent?.Invoke(Vector2.zero);
         
@@ -62,5 +60,13 @@ public class PlayerController : MonoBehaviour
             OnChangeViewEvent?.Invoke();
         }
     }
+
+    public void OnRun(InputAction.CallbackContext context)
+    {
+        if(context.phase == InputActionPhase.Started)
+            OnRunEvent?.Invoke(true);
+        else if(context.phase == InputActionPhase.Canceled)
+            OnRunEvent?.Invoke(false);
+    }   
 
 }

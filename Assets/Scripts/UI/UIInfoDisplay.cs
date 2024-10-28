@@ -12,7 +12,8 @@ public class UIInfoDisplay : MonoBehaviour
     void Start()
     {
         ClearInfo();
-        PlayerManager.Instance.player.GetComponent<PlayerInteraction>().OnDetectItem += UpdateInfo;
+        
+        Player.Instance.GetComponent<PlayerInteraction>().OnDetectItem += UpdateInfo;
     }
 
     public void UpdateInfo(ItemData data = null)

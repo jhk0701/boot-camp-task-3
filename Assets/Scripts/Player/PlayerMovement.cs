@@ -12,11 +12,14 @@ public class PlayerMovement : MonoBehaviour
     Vector2 movement;
     [Header("Move")]
     [SerializeField] float baseSpeed = 5f;
+    [SerializeField] [Range(1.1f, 3f)] float timesOfSpeedOnRunning = 1.5f;
     public float Speed => baseSpeed + player.dexterity / 5;
+    [SerializeField] float staminaUsageOfRun = 1f;
+    bool isRunning = false;
 
     [Header("Jump")]
     [SerializeField] float jumpPower = 5f;
-    [SerializeField] float staminaAmountOfJumpUsage = 10f;
+    [SerializeField] float staminaUsageOfJump = 10f;
     [SerializeField] LayerMask jumpableLayerMask;
 
 
@@ -32,15 +35,19 @@ public class PlayerMovement : MonoBehaviour
         // 생애주기를 함께할 것이라 구독해제는 따로 구현하지 않음
         controller.OnMoveEvent += Move;
         controller.OnJumpEvent += Jump;
+        controller.OnRunEvent += Run;
     }
 
     void FixedUpdate()
     {
         Vector3 move = transform.forward * movement.y + transform.right * movement.x;
-        move *= Speed;
+        move *= isRunning ? Speed * timesOfSpeedOnRunning : Speed;
         move.y = rb.velocity.y;
         
         rb.velocity = move;
+
+        if(isRunning)
+            player.UseStatusStat(player.stamina, staminaUsageOfRun * Time.fixedDeltaTime);
     }
 
 
@@ -54,8 +61,7 @@ public class PlayerMovement : MonoBehaviour
         if (IsJumpable())
         {
             rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
-            Player player = PlayerManager.Instance.player;
-            player.UseStatusStat(player.stamina, staminaAmountOfJumpUsage);
+            player.UseStatusStat(player.stamina, staminaUsageOfJump);
         }
     }
 
@@ -78,5 +84,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
         return false;
+    }
+
+    void Run(bool running)
+    {
+        isRunning = running;
     }
 }

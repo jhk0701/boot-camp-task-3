@@ -16,10 +16,9 @@ public class UIConsumableItems : MonoBehaviour
 
     void Start()
     {
-        PlayerManager.Instance.player.consumableItems = this;
+        Player.Instance.consumableItems = this;
         
-        // TODO : 이런 방식의 접근이 많아지면 player에 캐싱해두거나 다른 방법을 생각해봐야 할 듯.
-        PlayerManager.Instance.player.GetComponent<PlayerController>().OnUseItemEvent += UseItem;
+        Player.Instance.inputController.OnUseItemEvent += UseItem;
     }
 
     public void AcquireItem(ItemData item)
@@ -36,7 +35,7 @@ public class UIConsumableItems : MonoBehaviour
 
         // 맨 처음 item을 사용
         ItemData data = datas.Dequeue();
-        PlayerManager.Instance.player.StartItemEffect(data);
+        Player.Instance.StartItemEffect(data);
         
         // 아이템 쿨타임 적용
         StartCooldown(data.duration);
