@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 
@@ -19,6 +20,7 @@ public class Player : MonoBehaviour, IDamagable
     // 해당 클래스에서 의존성 주입해줄 것.
     public UIConsumableItems consumableItems;
     
+    WaitForSecondsRealtime waitForASecond = new WaitForSecondsRealtime(1f);
 
 
     void Awake()
@@ -50,5 +52,39 @@ public class Player : MonoBehaviour, IDamagable
     public void UseStamina(float amount)
     {
         stamina.Subtract(amount);
+    }
+
+    public void StartItemEffect(ItemData item)
+    {
+        if (ItemEffectHandler != null)
+            StopCoroutine(ItemEffectHandler);
+        
+        ItemEffectHandler = StartCoroutine(AdjustItemEffect(item));
+    }
+
+    Coroutine ItemEffectHandler;
+    IEnumerator AdjustItemEffect(ItemData item)
+    {
+        ConsumeEffect[] effects = item.consumeEffects;
+        float elapsedTime = 0f;
+        while (elapsedTime < item.duration)
+        {
+            for (int i = 0; i < effects.Length; i++)
+            {
+                switch(effects[i].target)
+                {
+                    case ItemEffectTarget.Health :
+                        Heal(effects[i].effectValue);
+                        break;
+                    case ItemEffectTarget.Stamina :
+                        RecoverStamina(effects[i].effectValue);
+                        break;
+                }
+            }
+            yield return waitForASecond;
+            elapsedTime += 1f;
+        }
+
+        ItemEffectHandler = null;
     }
 }

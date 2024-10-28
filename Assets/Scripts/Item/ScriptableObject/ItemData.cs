@@ -22,7 +22,6 @@ public class ConsumeEffect
 {
     public ItemEffectTarget target;
     public float effectValue;
-    public float duration;
 }
 
 [CreateAssetMenu(fileName = "Item",menuName = "boot-camp-task-3/ItemData")]
@@ -32,6 +31,7 @@ public class ItemData : ScriptableObject
     public string description;
     public ItemType type;
     public Sprite icon;
+    public float duration;
 
     [Header("Consume Effect")]
     public ConsumeEffect[] consumeEffects;

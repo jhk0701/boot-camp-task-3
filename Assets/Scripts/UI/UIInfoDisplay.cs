@@ -32,4 +32,5 @@ public class UIInfoDisplay : MonoBehaviour
         infoTitleText.text = string.Empty;
         infoDescText.text = string.Empty;
     }
+
 }
