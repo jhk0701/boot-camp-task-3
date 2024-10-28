@@ -54,7 +54,8 @@ public class PlayerMovement : MonoBehaviour
         if (IsJumpable())
         {
             rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
-            PlayerManager.Instance.player.UseStamina(staminaAmountOfJumpUsage);
+            Player player = PlayerManager.Instance.player;
+            player.UseStatusStat(player.stamina, staminaAmountOfJumpUsage);
         }
     }
 

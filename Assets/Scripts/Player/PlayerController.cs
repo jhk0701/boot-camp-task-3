@@ -5,12 +5,12 @@ using UnityEngine.InputSystem;
 // Player Input의 입력을 받아 처리할 클래스
 public class PlayerController : MonoBehaviour
 {
-    // 입력을 받으면 뿌려줄 것임
     public event Action<Vector2> OnMoveEvent;
     public event Action OnJumpEvent;
     public event Action OnInteractEvent;
     public event Action<Vector2> OnLookEvent;
     public event Action OnUseItemEvent;
+    public event Action OnChangeViewEvent;
 
 
     public void OnMove(InputAction.CallbackContext context)
@@ -52,6 +52,14 @@ public class PlayerController : MonoBehaviour
         if (context.phase == InputActionPhase.Started)
         {
             OnUseItemEvent?.Invoke();
+        }
+    }
+
+    public void OnChangeView(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            OnChangeViewEvent?.Invoke();
         }
     }
 

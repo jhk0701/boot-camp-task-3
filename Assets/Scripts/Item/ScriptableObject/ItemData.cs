@@ -11,6 +11,7 @@ public enum ItemEffectTarget
 {
     Health,
     Stamina,
+    Mana,
 
     Strength,
     Defense,

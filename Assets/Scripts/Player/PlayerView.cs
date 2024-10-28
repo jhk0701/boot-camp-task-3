@@ -30,10 +30,11 @@ public class PlayerView : MonoBehaviour
         // direction.y : 카메라 앵글
         float speed = rotateSensitive * Time.deltaTime;
 
-        transform.eulerAngles += Vector3.up * direction.x * speed;
+        transform.Rotate(Vector3.up * direction.x * speed);
 
         float rotateY = Mathf.Clamp(speed * -direction.y, minClampY, maxClampY);
-        cameraAxis.localEulerAngles += Vector3.right * rotateY;
+
+        cameraAxis.Rotate(Vector3.right * rotateY, Space.Self);
     }
     
 
@@ -42,5 +43,5 @@ public class PlayerView : MonoBehaviour
         direction = dir;
     }
     
-    // TODO 1, 3인칭 변경 기능
+    // TODO 1, 3인칭 변경 기능 (Tab 키)
 }

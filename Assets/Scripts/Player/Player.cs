@@ -8,15 +8,19 @@ public class Player : MonoBehaviour, IDamagable
     // 인스펙터에서 직접 할당함
     public StatusStat health;
     public StatusStat stamina;
+    public StatusStat mana;
 
+    [Space(10f)]
     [Tooltip("프레임 당 스태미너 회복량")]
     [SerializeField] float staminaRecoverAmount;
+    [SerializeField] float manaRecoverAmount;
 
     [Header("Ability Stat")]
     public float strength;
     public float defense;
     public float dexterity;
 
+    [Header("Item")]
     // 해당 클래스에서 의존성 주입해줄 것.
     public UIConsumableItems consumableItems;
     
@@ -30,29 +34,25 @@ public class Player : MonoBehaviour, IDamagable
 
     void Update()
     {
-        RecoverStamina(staminaRecoverAmount * Time.deltaTime);
+        RecoverStatusStat(stamina, staminaRecoverAmount * Time.deltaTime);
     }
 
 
-    public void Heal(float amount)
+    public void UseStatusStat(StatusStat stat, float amount)
     {
-        health.Add(amount);
+        stat.Subtract(amount);
     }
 
+    public void RecoverStatusStat(StatusStat stat, float amount)
+    {
+        stat.Add(amount);
+    }
+    
     public void TakeDamage(float amount)
     {
-        health.Subtract(amount);
+        UseStatusStat(health, amount);
     }
 
-    public void RecoverStamina(float amount)
-    {
-        stamina.Add(amount);
-    }
-
-    public void UseStamina(float amount)
-    {
-        stamina.Subtract(amount);
-    }
 
     public void StartItemEffect(ItemData item)
     {
@@ -74,10 +74,13 @@ public class Player : MonoBehaviour, IDamagable
                 switch(effects[i].target)
                 {
                     case ItemEffectTarget.Health :
-                        Heal(effects[i].effectValue);
+                        RecoverStatusStat(health, effects[i].effectValue);
                         break;
                     case ItemEffectTarget.Stamina :
-                        RecoverStamina(effects[i].effectValue);
+                        RecoverStatusStat(stamina, effects[i].effectValue);
+                        break;
+                    case ItemEffectTarget.Mana :
+                        RecoverStatusStat(mana, effects[i].effectValue);
                         break;
                 }
             }
