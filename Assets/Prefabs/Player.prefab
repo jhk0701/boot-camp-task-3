@@ -392,7 +392,7 @@ Transform:
   m_GameObject: {fileID: 542329847613287100}
   serializedVersion: 2
   m_LocalRotation: {x: 0.030538544, y: 0, z: 0, w: 0.99953365}
-  m_LocalPosition: {x: 0, y: 0.5, z: -3.5}
+  m_LocalPosition: {x: 1, y: 0.15, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1736,8 +1736,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2925904514923791788}
   serializedVersion: 4
-  m_Mass: 20
-  m_Drag: 0
+  m_Mass: 1
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -1893,6 +1893,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 880f79d5-2995-4629-8a1c-1a87c1c2c9d7
     m_ActionName: Player/Run[/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: eb913b36-6bcb-441d-8466-5953b59ddf1f
+    m_ActionName: Player/UseCursor[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Player Input
   m_DefaultActionMap: Player
@@ -1911,6 +1915,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputController: {fileID: 0}
+  rb: {fileID: 0}
   health: {fileID: 2089969316050874755}
   stamina: {fileID: 1274172939409670680}
   mana: {fileID: 457182590791270072}
@@ -1944,14 +1949,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e361cd08779ffa946ac87d9dd9906851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseSpeed: 1
-  timesOfSpeedOnRunning: 2
+  baseSpeed: 10
+  timesOfSpeedOnRunning: 1.5
   staminaUsageOfRun: 20
-  jumpPower: 100
+  jumpPower: 10
   staminaUsageOfJump: 10
   jumpableLayerMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 256
+  fallingThreshold: 1
 --- !u!114 &2410216232869163437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1965,9 +1971,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraAxis: {fileID: 2644681422084814413}
-  minClampY: -85
-  maxClampY: 35
-  rotateSensitive: 50
+  clampForFirstPerson: {x: -85, y: 35}
+  clampForThirdPerson: {x: -50, y: 50}
+  rotateSensitive: 30
   isFirstPersonView: 1
   firstPerson: {fileID: 652489420241101932}
   thirdPerson: {fileID: 1927552513059699171}
@@ -2008,7 +2014,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectRate: 0.1
-  maxDistance: 3
+  maxDistance: 5
   interactLayerMask:
     serializedVersion: 2
     m_Bits: 128

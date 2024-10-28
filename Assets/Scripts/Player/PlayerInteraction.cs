@@ -4,7 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerController))]
 public class PlayerInteraction : MonoBehaviour
 {
-    PlayerController controller;
     Camera cam;
 
     [Header("Interaction")]
@@ -13,21 +12,20 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] LayerMask interactLayerMask;
 
     float lastDetectTime;
-    GameObject item;
+    GameObject detectedObject;
 
     public event Action<ItemData> OnDetectItem;
+    public event Action<InteractableObject> OnDetectObject;
 
-
-    void Awake()
-    {
-        controller = GetComponent<PlayerController>();
-        cam = Camera.main;
-    }
 
     void Start()
     {
+        cam = Camera.main;
+
         // 생애 주기를 함께할 것이라 별도로 구독 해제는 구현하지 않음
+        PlayerController controller = Player.Instance.inputController;
         controller.OnInteractEvent += Interact;
+
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -41,32 +39,33 @@ public class PlayerInteraction : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, maxDistance, interactLayerMask))
         {
-            item = hit.collider.gameObject;
-            if (item.TryGetComponent(out ItemObject itemObject))
+            detectedObject = hit.collider.gameObject;
+            if (detectedObject.TryGetComponent(out ItemObject itemObject))
             {
-                UpdateUI(itemObject);
+                OnDetectItem?.Invoke(itemObject.data);
+                
+            }
+            else if (detectedObject.TryGetComponent(out InteractableObject interactableObject))
+            {
+                OnDetectObject?.Invoke(interactableObject);
             }
         }
         else
         {
             OnDetectItem?.Invoke(null);
+            OnDetectObject?.Invoke(null);
         }
-    }
-
-    
-    void UpdateUI(ItemObject itemObject)
-    {
-        // Debug.Log($"{itemObject.data.title} / {itemObject.data.description}");
-        OnDetectItem?.Invoke(itemObject.data);
     }
 
     void Interact()
     { 
-        if (item == null) return;
+        if(detectedObject == null) 
+            return;
 
-        if (item.TryGetComponent(out IInteractable interactable))
+        if (detectedObject.TryGetComponent(out IInteractable interactable))
         {
             interactable.Interact();
         }
+        
     }
 }

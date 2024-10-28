@@ -5,10 +5,11 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     Player player;
-    PlayerController controller;
+    
     Rigidbody rb;
 
     Vector2 movement;
+
     [Header("Move")]
     [SerializeField] float baseSpeed = 5f;
     [SerializeField] [Range(1.1f, 3f)] float timesOfSpeedOnRunning = 1.5f;
@@ -20,48 +21,83 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpPower = 5f;
     [SerializeField] float staminaUsageOfJump = 10f;
     [SerializeField] LayerMask jumpableLayerMask;
+    [SerializeField] float fallingThreshold = 2f;
+    float jumpTime;
+    
+    bool isJumping = false;
+    bool isFalling = false;
 
     public event Action OnPlayerJump;
+    public event Action OnPlayerFalling;
 
 
     void Start()
     {
         player = Player.Instance;
-        controller = player.inputController;
         rb = player.rb;
 
         // 생애주기를 함께할 것이라 구독해제는 따로 구현하지 않음
-        controller.OnMoveEvent += Move;
-        controller.OnJumpEvent += Jump;
-        controller.OnRunEvent += Run;
+        PlayerController controller = player.inputController;
+        controller.OnMoveEvent += OnMove;
+        controller.OnJumpEvent += OnJump;
+        controller.OnRunEvent += OnRun;
     }
 
     void FixedUpdate()
     {
-        Vector3 move = transform.forward * movement.y + transform.right * movement.x;
-        move *= isRunning ? Speed * timesOfSpeedOnRunning : Speed;
-        move.y = rb.velocity.y;
+        if (isJumping || isFalling)
+        {
+            Ray ray = new Ray(transform.position, Vector3.down);
+            if (Physics.Raycast(ray, 0.1f, jumpableLayerMask))
+            {
+                isJumping = false;
+                isFalling = false;
+            }
+            else if (Time.time - jumpTime > fallingThreshold && !isFalling)
+            {
+                isJumping = false;
+                isFalling = true;
+
+                OnPlayerFalling?.Invoke();
+            }
+
+            return;
+        }
+
+        Move();
+    }
+
+
+    void OnMove(Vector2 input)
+    {
+        movement = input;
+    }
+
+    void Move()
+    {
+        float speed = isRunning ? Speed * timesOfSpeedOnRunning : Speed;
         
-        rb.velocity = move;
+        Vector3 move = transform.forward * movement.y + transform.right * movement.x;
+        move *= speed;
+
+        // rb.velocity = move + rb.velocity;
+        rb.AddForce(move, ForceMode.Force);
 
         if(isRunning)
             player.UseStatusStat(player.stamina, staminaUsageOfRun * Time.fixedDeltaTime);
     }
 
-
-    void Move(Vector2 input)
+    void OnJump()
     {
-        movement = input;
-    }
-
-    void Jump()
-    {
-        if (IsJumpable())
+        if (IsJumpable() && !isFalling)
         {
             rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
             player.UseStatusStat(player.stamina, staminaUsageOfJump);
 
             OnPlayerJump?.Invoke();
+
+            isJumping = true;
+            jumpTime = Time.time;
         }
     }
 
@@ -86,7 +122,16 @@ public class PlayerMovement : MonoBehaviour
         return false;
     }
 
-    void Run(bool running)
+    void CheckIsFalling()
+    {
+        Ray ray = new Ray(transform.position, Vector3.down);
+        if (!Physics.Raycast(ray, fallingThreshold, jumpableLayerMask))
+            isFalling = true;
+        else
+            isFalling = false;
+    }
+
+    void OnRun(bool running)
     {
         isRunning = running;
     }

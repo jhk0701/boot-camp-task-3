@@ -4,8 +4,8 @@ public class JumpPlatform : Platform
 {
     [SerializeField] protected float power = 300f;
 
-    protected override void Operate(Player player)
+    protected override void Operate(Rigidbody rb)
     {
-        player.rb.AddForce(Vector3.up * power, ForceMode.Impulse);
+        rb.AddForce(Vector3.up * power, ForceMode.Impulse);
     }
 }

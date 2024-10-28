@@ -30,6 +30,7 @@ public class PlayerView : MonoBehaviour
         controller.OnChangeViewEvent += ChangeView;
 
         isFirstPersonView = true;
+        camRotateX = cameraAxis.localEulerAngles.x;
     }
 
     void LateUpdate()
@@ -41,13 +42,13 @@ public class PlayerView : MonoBehaviour
         transform.Rotate(Vector3.up * direction.x * speed);
 
         camRotateX += speed * -direction.y;
-        
-        if(isFirstPersonView)
+
+        if (isFirstPersonView)
             camRotateX = Mathf.Clamp(camRotateX, clampForFirstPerson.x, clampForFirstPerson.y);
         else
             camRotateX = Mathf.Clamp(camRotateX, clampForThirdPerson.x, clampForThirdPerson.y);
 
-        cameraAxis.localEulerAngles = Vector3.right * camRotateX;
+        cameraAxis.localEulerAngles = new Vector3(camRotateX, 0f, 0f);
     }
     
 

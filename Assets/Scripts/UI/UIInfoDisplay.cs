@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class UIInfoDisplay : MonoBehaviour
 {
@@ -12,11 +11,13 @@ public class UIInfoDisplay : MonoBehaviour
     void Start()
     {
         ClearInfo();
-        
-        Player.Instance.GetComponent<PlayerInteraction>().OnDetectItem += UpdateInfo;
+
+        PlayerInteraction interaction = Player.Instance.interaction;
+        interaction.OnDetectItem += UpdateInfo;
+        interaction.OnDetectObject += UpdateInfo;
     }
 
-    public void UpdateInfo(ItemData data = null)
+    void UpdateInfo(ItemData data = null)
     {
         if(data == null)
         {
@@ -28,7 +29,18 @@ public class UIInfoDisplay : MonoBehaviour
         infoDescText.text = data.description;
     }
 
-    public void ClearInfo()
+    void UpdateInfo(InteractableObject data = null)
+    {
+        if(data == null)
+        {
+            ClearInfo();
+            return;
+        }
+        infoTitleText.text = string.Empty;
+        infoDescText.text = String.Format("{0}키를 눌러 {1}.", data.keyToInteract.ToString(), data.ConvertInteractionType(data.type));
+    }
+
+    void ClearInfo()
     {
         infoTitleText.text = string.Empty;
         infoDescText.text = string.Empty;

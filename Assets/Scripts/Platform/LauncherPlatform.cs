@@ -1,16 +1,34 @@
 using UnityEngine;
 
-public class LauncherPlatform : JumpPlatform, IInteractable
+public class LauncherPlatform : JumpPlatform
 {
     [SerializeField] Transform firePoint;
+    Rigidbody rb;
 
-    public void Interact()
+    protected override void Operate(Rigidbody rb)
     {
-        
+        this.rb = rb;
+        Invoke("Launch", 5f);
     }
 
-    protected override void Operate(Player player)
+    public void Launch()
     {
-        player.rb.AddForce((firePoint ? firePoint.forward : transform.forward)  * power, ForceMode.Impulse);
+        if(rb == null)
+            return;
+
+        if (IsInvoking("Launch"))
+            CancelInvoke("Launch");
+
+        rb.AddForce((firePoint ? firePoint.forward : transform.forward) * power, ForceMode.Impulse);
+        rb = null;
+    }
+
+    void OnCollisionExit(Collision other)
+    {
+        if (IsInvoking("Launch"))
+            CancelInvoke("Launch");
+
+        if (rb != null)
+            rb = null;
     }
 }
