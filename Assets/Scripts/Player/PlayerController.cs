@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public event Action OnJumpEvent;
     public event Action OnInteractEvent;
     public event Action<Vector2> OnLookEvent;
+    public event Action OnUseItemEvent;
 
 
     public void OnMove(InputAction.CallbackContext context)
@@ -40,9 +41,17 @@ public class PlayerController : MonoBehaviour
 
     public void OnInteract(InputAction.CallbackContext context)
     {
-        if(context.phase == InputActionPhase.Started)
+        if (context.phase == InputActionPhase.Started)
         {
             OnInteractEvent?.Invoke();
+        }
+    }
+
+    public void OnUseItem(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            OnUseItemEvent?.Invoke();
         }
     }
 

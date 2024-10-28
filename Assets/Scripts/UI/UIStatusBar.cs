@@ -9,13 +9,15 @@ public class UIStatusBar : MonoBehaviour
 
     void Awake()
     {
-        fillBar = GetComponentInChildren<Image>();
+        if(fillBar == null)
+            fillBar = GetComponentInChildren<Image>();
     }
 
     void Start()
     {
         GetComponent<StatusStat>().OnValueChanged += ChangeValue;
     }
+
 
     void ChangeValue(float val)
     {

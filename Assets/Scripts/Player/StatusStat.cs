@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class StatusStat : MonoBehaviour
 {
-    float value;
+    [SerializeField] float value;
     public float Value 
     { 
         get { return value; } 
-        protected set 
+        private set 
         {
             this.value = value;            
             OnValueChanged?.Invoke(this.value / max);

@@ -14,4 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: "\uD14C\uC2A4\uD2B8 \uC544\uC774\uD15C"
   description: "\uD14C\uC2A4\uD2B8\uC6A9 \uC544\uC774\uD15C\uC785\uB2C8\uB2E4."
-  type: {fileID: 0}
+  type: 0
+  icon: {fileID: 1181023038, guid: 05e0567213a58c840a3ea79a4409bdfd, type: 3}
+  consumeEffects:
+  - target: 0
+    effectValue: 5
+    duration: 10
+  - target: 1
+    effectValue: 5
+    duration: 10

@@ -1,21 +1,28 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Player))]
 [RequireComponent(typeof(PlayerController))]
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
 {
+    Player player;
     PlayerController controller;
     Rigidbody rb;
 
     Vector2 movement;
+    [Header("Move")]
+    [SerializeField] float baseSpeed = 5f;
+    public float Speed => baseSpeed + player.dexterity / 5;
 
-    [SerializeField] float speed = 5f;
+    [Header("Jump")]
     [SerializeField] float jumpPower = 5f;
+    [SerializeField] float staminaAmountOfJumpUsage = 10f;
     [SerializeField] LayerMask jumpableLayerMask;
 
 
     void Awake()
     {
+        player = GetComponent<Player>();
         controller = GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody>();
     }
@@ -30,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         Vector3 move = transform.forward * movement.y + transform.right * movement.x;
-        move *= speed;
+        move *= Speed;
         move.y = rb.velocity.y;
         
         rb.velocity = move;
@@ -45,7 +52,10 @@ public class PlayerMovement : MonoBehaviour
     void Jump()
     {
         if (IsJumpable())
+        {
             rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+            PlayerManager.Instance.player.UseStamina(staminaAmountOfJumpUsage);
+        }
     }
 
     bool IsJumpable()

@@ -60,7 +60,12 @@ public class PlayerInteraction : MonoBehaviour
     }
 
     void Interact()
-    {
+    { 
+        if (item == null) return;
 
+        if (item.TryGetComponent(out IInteractable interactable))
+        {
+            interactable.Interact();
+        }
     }
 }
