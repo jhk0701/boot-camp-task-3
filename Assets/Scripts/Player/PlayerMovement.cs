@@ -2,8 +2,6 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Player))]
-[RequireComponent(typeof(PlayerController))]
-[RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
 {
     Player player;
@@ -26,15 +24,12 @@ public class PlayerMovement : MonoBehaviour
     public event Action OnPlayerJump;
 
 
-    void Awake()
-    {
-        player = GetComponent<Player>();
-        controller = GetComponent<PlayerController>();
-        rb = GetComponent<Rigidbody>();
-    }
-
     void Start()
     {
+        player = Player.Instance;
+        controller = player.inputController;
+        rb = player.rb;
+
         // 생애주기를 함께할 것이라 구독해제는 따로 구현하지 않음
         controller.OnMoveEvent += Move;
         controller.OnJumpEvent += Jump;
@@ -65,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
             player.UseStatusStat(player.stamina, staminaUsageOfJump);
-            
+
             OnPlayerJump?.Invoke();
         }
     }

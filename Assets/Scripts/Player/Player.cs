@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : Singleton<Player>, IDamagable
 {
     [HideInInspector] public PlayerController inputController;
+    [HideInInspector] public Rigidbody rb;
 
 
     [Header("Status Stat")]
@@ -33,6 +34,7 @@ public class Player : Singleton<Player>, IDamagable
     void Awake()
     {
         inputController = GetComponent<PlayerController>();
+        rb = GetComponent<Rigidbody>();
     }
 
     void Update()
