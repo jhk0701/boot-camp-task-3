@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Player))]
@@ -21,6 +22,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpPower = 5f;
     [SerializeField] float staminaUsageOfJump = 10f;
     [SerializeField] LayerMask jumpableLayerMask;
+
+    public event Action OnPlayerJump;
 
 
     void Awake()
@@ -62,6 +65,8 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
             player.UseStatusStat(player.stamina, staminaUsageOfJump);
+            
+            OnPlayerJump?.Invoke();
         }
     }
 

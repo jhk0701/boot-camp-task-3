@@ -58,12 +58,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 74479045629564776}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2644681422084814413}
+  m_Father: {fileID: 652489420241101932}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &1745754249590730949
 Camera:
@@ -534,7 +534,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1990906358326956335}
   - {fileID: 652489420241101932}
   - {fileID: 1927552513059699171}
   m_Father: {fileID: 1392640351211562016}
@@ -1947,7 +1946,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseSpeed: 1
   timesOfSpeedOnRunning: 2
-  staminaUsageOfRun: 1
+  staminaUsageOfRun: 20
   jumpPower: 100
   staminaUsageOfJump: 10
   jumpableLayerMask:
@@ -1966,10 +1965,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraAxis: {fileID: 2644681422084814413}
-  minClampY: -75
-  maxClampY: 85
+  minClampY: -85
+  maxClampY: 35
   rotateSensitive: 50
-  isFirstPersonView: 0
+  isFirstPersonView: 1
   firstPerson: {fileID: 652489420241101932}
   thirdPerson: {fileID: 1927552513059699171}
   changingAnimation:
@@ -2760,10 +2759,11 @@ Transform:
   m_GameObject: {fileID: 5134287937881651400}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1990906358326956335}
   m_Father: {fileID: 2644681422084814413}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5185401132791880771

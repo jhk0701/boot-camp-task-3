@@ -6,7 +6,7 @@ public class PlayerAnimatorController : MonoBehaviour
     Animator animator;
     readonly int MoveX = Animator.StringToHash("MoveX");
     readonly int MoveY = Animator.StringToHash("MoveY");
-    readonly int Jump = Animator.StringToHash("Jump");
+    readonly int Jumping = Animator.StringToHash("Jumping");
     readonly int IsRunning = Animator.StringToHash("IsRunning");
 
 
@@ -22,6 +22,10 @@ public class PlayerAnimatorController : MonoBehaviour
         Player player = Player.Instance;
         player.inputController.OnMoveEvent += Move;
         player.inputController.OnRunEvent += Run;
+
+        // player.inputController.OnJumpEvent += Jump; // 실제 캐릭터가 점프할 때 호출
+        player.GetComponent<PlayerMovement>().OnPlayerJump += Jump;
+
     }
 
     
@@ -34,5 +38,10 @@ public class PlayerAnimatorController : MonoBehaviour
     void Run(bool running)
     {
         animator.SetBool(IsRunning, running);
+    }
+
+    void Jump()
+    {   
+        animator.SetTrigger(Jumping);
     }
 }
