@@ -12,15 +12,15 @@ public class PlayerStatus : MonoBehaviour, IDamagable
     public Stat stamina;
     public Stat mana;
 
-    [Space(10f)]
-    [Tooltip("프레임 당 스태미너 회복량")]
-    [SerializeField] float staminaRecoverAmount;
-    [SerializeField] float manaRecoverAmount;
-
     [Header("Ability Stat")]
     public Stat strength;
     public Stat defense;
     public Stat dexterity;
+
+    [Space(10f)]
+    [Tooltip("프레임 당 스태미너 회복량")]
+    [SerializeField] float staminaRecoverAmount;
+    [SerializeField] float manaRecoverAmount;
 
     WaitForSecondsRealtime waitForASecond = new WaitForSecondsRealtime(1f);
 
@@ -132,5 +132,43 @@ public class PlayerStatus : MonoBehaviour, IDamagable
         }
 
         ItemEffectHandler = null;
+    }
+
+    public void AdjustEquipment(ItemData data)
+    {
+        for (int i = 0; i < data.itemEffects.Length; i++)
+        {
+            switch (data.itemEffects[i].target)
+            {
+                case ItemEffectTarget.Strength :
+                    strength.Add(data.itemEffects[i].effectValue);
+                    break;
+                case ItemEffectTarget.Defense :
+                    defense.Add(data.itemEffects[i].effectValue);
+                    break;
+                case ItemEffectTarget.Dexterity :
+                    dexterity.Add(data.itemEffects[i].effectValue);
+                    break;
+            }
+        }
+    }
+
+    public void RemoveEquipment(ItemData data)
+    {
+        for (int i = 0; i < data.itemEffects.Length; i++)
+        {
+            switch (data.itemEffects[i].target)
+            {
+                case ItemEffectTarget.Strength :
+                    strength.Subtract(data.itemEffects[i].effectValue);
+                    break;
+                case ItemEffectTarget.Defense :
+                    defense.Subtract(data.itemEffects[i].effectValue);
+                    break;
+                case ItemEffectTarget.Dexterity :
+                    dexterity.Subtract(data.itemEffects[i].effectValue);
+                    break;
+            }
+        }
     }
 }

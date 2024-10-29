@@ -10,10 +10,16 @@ public class UIInventory : MonoBehaviour
     void Awake()
     {
         for (int i = 0; i < slots.Length; i++)
+        {
             slots[i].index = i;
+            slots[i].OnSlotSelected += Equip;
+        }
 
         for (int i = 0; i < currentEquipped.Length; i++)
+        {
             currentEquipped[i].index = i;
+            currentEquipped[i].OnSlotSelected += Unequip;
+        }
     }
 
     void Start()
@@ -51,6 +57,12 @@ public class UIInventory : MonoBehaviour
             slots[i].SetUI();
     }
 
+    void UpdateEquipmentUI()
+    {
+        for (int i = 0; i < currentEquipped.Length; i++)
+            currentEquipped[i].SetUI();
+    }
+
     public bool IsFull()
     {
         for (int i = 0; i < slots.Length; i++)
@@ -77,5 +89,54 @@ public class UIInventory : MonoBehaviour
     {
         Vector3 pos = transform.position + Vector3.forward;
         Instantiate(item.prefab, pos, Quaternion.identity);
+    }
+
+    public void Equip(int index)
+    {
+        ItemSlot slot = GetEmptyEquipSlot();
+
+        if(slot == null)
+        {
+            Debug.Log("장착 아이템 창이 모두 찼습니다.");
+            return;
+        }
+        
+        slot.data = slots[index].data;
+        slots[index].data = null;
+
+        Player.Instance.status.AdjustEquipment(slot.data);
+
+        UpdateInventoryUI();
+        UpdateEquipmentUI();
+    }
+
+    public void Unequip(int index)
+    {
+        ItemSlot slot = GetEmptySlot();
+
+        if(slot == null)
+        {
+            Debug.Log("아이템 창이 모두 찼습니다.");
+            return;
+        }
+        
+        slot.data = currentEquipped[index].data;
+        currentEquipped[index].data = null;
+
+        Player.Instance.status.RemoveEquipment(slot.data);
+
+        UpdateInventoryUI();
+        UpdateEquipmentUI();
+    }
+
+    ItemSlot GetEmptyEquipSlot()
+    {
+        for (int i = 0; i < currentEquipped.Length; i++)
+        {
+            if(currentEquipped[i].data == null)
+                return currentEquipped[i];
+        }
+
+        return null;
     }
 }
