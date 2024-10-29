@@ -56,22 +56,6 @@ public class NPC : MonoBehaviour, IDamagable
         curState = state;
         curState.Start();
     }
-
-    public Vector3 GetWanderDestination(float minDistance, float maxDistance, int maxTrial = 30)
-    {
-        Vector3 position = Vector3.zero;
-        NavMeshHit hit = new NavMeshHit();
-
-        int trial = 0;
-        do
-        {
-            position = transform.position + Random.onUnitSphere * Random.Range(minDistance, maxDistance);
-            if (NavMesh.SamplePosition(position, out hit, maxDistance, NavMesh.AllAreas))
-                break;
-        }
-        while(trial < maxTrial);
-
-        return hit.position;
-    }    
+ 
 
 }
