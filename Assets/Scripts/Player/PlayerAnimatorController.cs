@@ -28,6 +28,7 @@ public class PlayerAnimatorController : MonoBehaviour
         // player.inputController.OnJumpEvent += Jump; // 실제 캐릭터가 점프할 때 호출
         player.movement.OnPlayerJump += Jump;
         player.movement.OnPlayerFall += Fall;
+        player.movement.OnPlayerLand += Land;
 
     }
 
@@ -52,5 +53,10 @@ public class PlayerAnimatorController : MonoBehaviour
     {
         animator.SetTrigger(Falling);
         animator.SetBool(IsFalling, true);
+    }
+
+    void Land()
+    {
+        animator.SetBool(IsFalling, false);
     }
 }

@@ -21,10 +21,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpPower = 5f;
     [SerializeField] float staminaUsageOfJump = 10f;
     [SerializeField] LayerMask jumpableLayerMask;
+    [SerializeField] bool isFalling = false;
+    [SerializeField] float fallingCheckRate = 0.1f;
+    float lastFallingCheck ;
 
     public event Action OnPlayerRun;
     public event Action OnPlayerJump;
     public event Action OnPlayerFall;
+    public event Action OnPlayerLand;
 
 
     void Start()
@@ -41,6 +45,14 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (isFalling)
+        {
+            if (Time.time - lastFallingCheck > fallingCheckRate && IsGrounded())
+            {
+                isFalling = false;
+                OnPlayerLand?.Invoke();
+            }
+        }
 
         Move();
     }
@@ -54,6 +66,7 @@ public class PlayerMovement : MonoBehaviour
     void Move()
     {
         float speed = isRunning ? Speed * timesOfSpeedOnRunning : Speed;
+        speed *= isFalling ? 0.5f : 1f;
         
         Vector3 move = transform.forward * movement.y + transform.right * movement.x;
         move *= speed * rb.mass * 1.5f;
@@ -82,7 +95,13 @@ public class PlayerMovement : MonoBehaviour
     {
         if (IsGrounded())
         {
-            
+            isFalling = false;
+        }
+        else
+        {
+            isFalling = true;
+            lastFallingCheck = Time.time;
+            OnPlayerFall?.Invoke();
         }
     }
 
