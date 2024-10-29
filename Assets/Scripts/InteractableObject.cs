@@ -5,7 +5,8 @@ using UnityEngine.Events;
 public enum InteractionType
 {
     Launch,
-    // OpenDoor : 문 열기 등등
+    Open, // OpenDoor : 문 열기 등등
+    
 }
 
 public class InteractableObject : MonoBehaviour, IInteractable
@@ -28,6 +29,8 @@ public class InteractableObject : MonoBehaviour, IInteractable
         {
             case InteractionType.Launch :
                 return "발사하기";
+            case InteractionType.Open :
+                return "열기";
             default :
                 return "상호작용하기";
         }

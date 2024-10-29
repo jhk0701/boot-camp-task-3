@@ -1395,7 +1395,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -160, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1358470233924410066
@@ -2159,6 +2159,7 @@ MonoBehaviour:
   movement: {fileID: 0}
   rb: {fileID: 0}
   consumableItems: {fileID: 0}
+  inventory: {fileID: 0}
 --- !u!114 &6721104192366544076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2174,11 +2175,11 @@ MonoBehaviour:
   health: {fileID: 2089969316050874755}
   stamina: {fileID: 1274172939409670680}
   mana: {fileID: 457182590791270072}
-  staminaRecoverAmount: 5
-  manaRecoverAmount: 5
   strength: {fileID: 3452713849076737755}
   defense: {fileID: 4601194404809086091}
   dexterity: {fileID: 7229701470564003918}
+  staminaRecoverAmount: 5
+  manaRecoverAmount: 5
 --- !u!114 &6168916903224875141
 MonoBehaviour:
   m_ObjectHideFlags: 0
