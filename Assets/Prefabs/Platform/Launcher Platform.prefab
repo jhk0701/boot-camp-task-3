@@ -151,8 +151,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce433ef825921f741b16f4dc3f35262c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  power: 20
-  firePoint: {fileID: 3605871295123444091}
+  power: 100
+  fireDirection: {fileID: 3605871295123444091}
+  delayTime: 5
 --- !u!114 &1953713200892911660
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -74,7 +74,7 @@ public class Player : Singleton<Player>, IDamagable
     Coroutine ItemEffectHandler;
     IEnumerator AdjustItemEffect(ItemData item)
     {
-        ConsumeEffect[] effects = item.consumeEffects;
+        ItemEffect[] effects = item.itemEffects;
         float elapsedTime = 0f;
         while (elapsedTime < item.duration)
         {

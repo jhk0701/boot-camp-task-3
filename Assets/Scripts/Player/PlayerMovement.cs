@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] LayerMask jumpableLayerMask;
     [SerializeField] bool isFalling = false;
     [SerializeField] float fallingCheckRate = 0.1f;
-    float lastFallingCheck ;
+    float lastFallingCheck;
 
     public event Action OnPlayerRun;
     public event Action OnPlayerJump;

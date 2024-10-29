@@ -8,6 +8,7 @@ public class ItemSlot : MonoBehaviour
     public ItemData data;
 
     [Space(10f)]
+    [SerializeField] Sprite defaultIcon;
     [SerializeField] Image icon;
 
     public void SetUI()
@@ -15,6 +16,6 @@ public class ItemSlot : MonoBehaviour
         if(data != null)
             icon.sprite = data.icon;
         else
-            icon.sprite = null;
+            icon.sprite = defaultIcon;
     }
 }

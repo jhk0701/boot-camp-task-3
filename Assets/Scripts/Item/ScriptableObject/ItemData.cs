@@ -18,10 +18,17 @@ public enum ItemEffectTarget
     Dexterity
 }
 
+public enum ItemEffectType
+{
+    Recovery,
+    InstantSupport
+}
+
 [Serializable]
-public class ConsumeEffect
+public class ItemEffect
 {
     public ItemEffectTarget target;
+    public ItemEffectType type;
     public float effectValue;
 }
 
@@ -34,6 +41,6 @@ public class ItemData : ScriptableObject
     public Sprite icon;
     public float duration;
 
-    [Header("Consume Effect")]
-    public ConsumeEffect[] consumeEffects;
+    [Header("Item Effect")]
+    public ItemEffect[] itemEffects;
 }

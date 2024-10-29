@@ -2,13 +2,14 @@ using UnityEngine;
 
 public class LauncherPlatform : JumpPlatform
 {
-    [SerializeField] Transform firePoint;
+    [SerializeField] Transform fireDirection;
+    [SerializeField] float delayTime = 5f;
     Rigidbody rb;
 
     protected override void Operate(Rigidbody rb)
     {
         this.rb = rb;
-        Invoke("Launch", 5f);
+        Invoke("Launch", delayTime);
     }
 
     public void Launch()
@@ -19,7 +20,7 @@ public class LauncherPlatform : JumpPlatform
         if (IsInvoking("Launch"))
             CancelInvoke("Launch");
 
-        rb.AddForce((firePoint ? firePoint.forward : transform.forward) * power, ForceMode.Impulse);
+        rb.AddForce((fireDirection ? fireDirection.forward : transform.forward) * power, ForceMode.Impulse);
         rb = null;
     }
 
