@@ -23,7 +23,7 @@ public class WanderState : IAgentState
     {
         Npc.agent.isStopped = false;
 
-        Vector3 targetPosition = Npc.GetWanderDestination(minWanderDistance, maxWanderDistance);
+        Vector3 targetPosition = GetWanderDestination(minWanderDistance, maxWanderDistance);
         Npc.agent.SetDestination(targetPosition);
 
         time = Time.time;
@@ -50,6 +50,37 @@ public class WanderState : IAgentState
         {
             Npc.ChangeState(Npc.IdleState);
         }
-        
+        else
+        {
+            Vector3 destination = Npc.agent.destination;
+            NavMeshPath path = new NavMeshPath();
+            if (Npc.agent.CalculatePath(destination, path))
+            {
+                Npc.agent.SetDestination(destination); 
+            }
+            else // 이동 불가 시, 새로운 곳으로
+            {
+                destination = GetWanderDestination(minWanderDistance, maxWanderDistance);
+                Npc.agent.SetDestination(destination);
+            }
+        }
     }
+
+    
+    public Vector3 GetWanderDestination(float minDistance, float maxDistance, int maxTrial = 30)
+    {
+        Vector3 position = Vector3.zero;
+        NavMeshHit hit = new NavMeshHit();
+
+        int trial = 0;
+        do
+        {
+            position = Npc.transform.position + Random.onUnitSphere * Random.Range(minDistance, maxDistance);
+            if (NavMesh.SamplePosition(position, out hit, maxDistance, NavMesh.AllAreas))
+                break;
+        }
+        while(trial < maxTrial);
+
+        return hit.position;
+    }   
 }

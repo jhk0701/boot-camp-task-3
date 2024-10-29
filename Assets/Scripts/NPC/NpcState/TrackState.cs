@@ -37,6 +37,7 @@ public class TrackState : IAgentState
         {
             // 공격
             // Attack();
+            Npc.ChangeState(Npc.AttackState);
             
         }
         else if (targetDistance <= Npc.detectDistance)
