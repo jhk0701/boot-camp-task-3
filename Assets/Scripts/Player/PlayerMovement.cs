@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public float baseSpeed = 5f;
     [HideInInspector] [Range(1.1f, 3f)] public float timesOfSpeedOnRunning = 1.5f;
     public float Speed => baseSpeed + player.status.dexterity.Value / 5;
-    [HideInInspector] public float staminaUsageOfRun = 1f;
+    public float staminaUsageOfRun = 1f;
     [HideInInspector] public bool isRunning = false;
 
     [Header("Jump")]

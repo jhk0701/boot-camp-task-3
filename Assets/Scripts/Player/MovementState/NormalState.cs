@@ -10,7 +10,6 @@ public class NormalState : IMovementState
         Movement = movement;
     }
 
-
     public void FixedUpdate()
     {
         if (Movement.isFalling)

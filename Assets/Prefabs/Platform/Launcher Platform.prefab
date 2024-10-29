@@ -168,7 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keyToInteract: 101
   type: 0
-  OnIteract:
+  OnInteract:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4482244536276622014}

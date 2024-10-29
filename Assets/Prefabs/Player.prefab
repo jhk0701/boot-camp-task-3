@@ -2233,7 +2233,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraAxis: {fileID: 2644681422084814413}
   clampForFirstPerson: {x: -85, y: 35}
-  clampForThirdPerson: {x: -50, y: 50}
+  clampForThirdPerson: {x: -50, y: 70}
   rotateSensitive: 30
   isFirstPersonView: 1
   firstPerson: {fileID: 652489420241101932}

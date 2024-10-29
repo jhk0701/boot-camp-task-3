@@ -149,7 +149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keyToInteract: 101
   type: 1
-  OnIteract:
+  OnInteract:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6278303438192790641}
@@ -183,3 +183,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 907a8265783b7d34e883e29845a488ca, type: 2}
   - {fileID: 11400000, guid: 9721638f8d0fa6240bdebcd0ba862983, type: 2}
   - {fileID: 11400000, guid: 38615744c762ed54d86e76e9961bebcc, type: 2}
+  count: 1

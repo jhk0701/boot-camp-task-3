@@ -16,11 +16,11 @@ public class InteractableObject : MonoBehaviour, IInteractable
     public InteractionType type;
 
     [Space(10f)]
-    public UnityEvent OnIteract;
+    public UnityEvent OnInteract;
 
     public void Interact()
     {
-        OnIteract?.Invoke();
+        OnInteract?.Invoke();
     }
 
     public string ConvertInteractionType(InteractionType type)
