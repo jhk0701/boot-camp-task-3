@@ -1,16 +1,17 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class RailPlatform : Platform
+public class PlatformMover : MonoBehaviour
 {
     [SerializeField] Transform platform;
     [SerializeField] Transform startPoint;
     [SerializeField] Transform endPoint;
+    [Space(10f)]
     [SerializeField] float speed = 1f;
     [SerializeField] float stopTime = 3f;
 
     WaitForSeconds waitForSec;
+    Transform player;
 
     void Start()
     {
@@ -42,7 +43,7 @@ public class RailPlatform : Platform
             progress += speed * Time.deltaTime * direction;
 
             platform.localPosition = Vector3.Lerp(startPoint.localPosition, endPoint.localPosition, progress);
-            
+
             yield return null;
 
             if ((direction > 0 && progress > target) || (direction < 0 && progress < target))
@@ -54,9 +55,4 @@ public class RailPlatform : Platform
         Move(-direction);
     }
 
-
-    protected override void Operate(Rigidbody rb)
-    {
-        
-    }
 }
