@@ -6,6 +6,7 @@ public class Player : Singleton<Player>, IDamagable
 {
     [HideInInspector] public PlayerController inputController;
     [HideInInspector] public PlayerInteraction interaction;
+    [HideInInspector] public PlayerMovement movement;
     [HideInInspector] public Rigidbody rb;
 
 
@@ -36,6 +37,7 @@ public class Player : Singleton<Player>, IDamagable
     {
         inputController = GetComponent<PlayerController>();
         interaction = GetComponent<PlayerInteraction>();
+        movement = GetComponent<PlayerMovement>();
         rb = GetComponent<Rigidbody>();
     }
 

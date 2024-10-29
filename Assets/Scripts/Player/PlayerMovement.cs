@@ -21,14 +21,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpPower = 5f;
     [SerializeField] float staminaUsageOfJump = 10f;
     [SerializeField] LayerMask jumpableLayerMask;
-    [SerializeField] float fallingThreshold = 2f;
-    float jumpTime;
-    
-    bool isJumping = false;
-    bool isFalling = false;
 
+    public event Action OnPlayerRun;
     public event Action OnPlayerJump;
-    public event Action OnPlayerFalling;
+    public event Action OnPlayerFall;
 
 
     void Start()
@@ -45,24 +41,6 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (isJumping || isFalling)
-        {
-            Ray ray = new Ray(transform.position, Vector3.down);
-            if (Physics.Raycast(ray, 0.1f, jumpableLayerMask))
-            {
-                isJumping = false;
-                isFalling = false;
-            }
-            else if (Time.time - jumpTime > fallingThreshold && !isFalling)
-            {
-                isJumping = false;
-                isFalling = true;
-
-                OnPlayerFalling?.Invoke();
-            }
-
-            return;
-        }
 
         Move();
     }
@@ -78,9 +56,11 @@ public class PlayerMovement : MonoBehaviour
         float speed = isRunning ? Speed * timesOfSpeedOnRunning : Speed;
         
         Vector3 move = transform.forward * movement.y + transform.right * movement.x;
-        move *= speed;
+        move *= speed * rb.mass * 1.5f;
 
-        // rb.velocity = move + rb.velocity;
+        // move.y = rb.velocity.y;
+        // rb.velocity = move;
+        // 수정 : 문제 내용에 따른 AddForce로 구현
         rb.AddForce(move, ForceMode.Force);
 
         if(isRunning)
@@ -89,19 +69,24 @@ public class PlayerMovement : MonoBehaviour
 
     void OnJump()
     {
-        if (IsJumpable() && !isFalling)
+        if (IsGrounded())
         {
             rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
             player.UseStatusStat(player.stamina, staminaUsageOfJump);
 
             OnPlayerJump?.Invoke();
-
-            isJumping = true;
-            jumpTime = Time.time;
         }
     }
 
-    bool IsJumpable()
+    public void OnJumpEnd()
+    {
+        if (IsGrounded())
+        {
+            
+        }
+    }
+
+    bool IsGrounded()
     {
         Ray[] rays = new Ray[]
         {
@@ -120,15 +105,6 @@ public class PlayerMovement : MonoBehaviour
         }
 
         return false;
-    }
-
-    void CheckIsFalling()
-    {
-        Ray ray = new Ray(transform.position, Vector3.down);
-        if (!Physics.Raycast(ray, fallingThreshold, jumpableLayerMask))
-            isFalling = true;
-        else
-            isFalling = false;
     }
 
     void OnRun(bool running)

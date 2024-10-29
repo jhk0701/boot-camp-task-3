@@ -29,7 +29,7 @@ public class PlayerView : MonoBehaviour
         controller.OnLookEvent += Look;
         controller.OnChangeViewEvent += ChangeView;
 
-        isFirstPersonView = true;
+        isFirstPersonView = false;
         camRotateX = cameraAxis.localEulerAngles.x;
     }
 

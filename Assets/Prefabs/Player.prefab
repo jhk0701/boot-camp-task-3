@@ -58,12 +58,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 74479045629564776}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 652489420241101932}
+  m_Father: {fileID: 1927552513059699171}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &1745754249590730949
 Camera:
@@ -395,7 +395,8 @@ Transform:
   m_LocalPosition: {x: 1, y: 0.15, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1990906358326956335}
   m_Father: {fileID: 2644681422084814413}
   m_LocalEulerAnglesHint: {x: 3.5, y: 0, z: 0}
 --- !u!1 &559157995734234714
@@ -1736,7 +1737,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2925904514923791788}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 2
   m_Drag: 1
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1915,6 +1916,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputController: {fileID: 0}
+  interaction: {fileID: 0}
+  movement: {fileID: 0}
   rb: {fileID: 0}
   health: {fileID: 2089969316050874755}
   stamina: {fileID: 1274172939409670680}
@@ -1949,7 +1952,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e361cd08779ffa946ac87d9dd9906851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseSpeed: 10
+  baseSpeed: 5
   timesOfSpeedOnRunning: 1.5
   staminaUsageOfRun: 20
   jumpPower: 10
@@ -2768,8 +2771,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1990906358326956335}
+  m_Children: []
   m_Father: {fileID: 2644681422084814413}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5185401132791880771
