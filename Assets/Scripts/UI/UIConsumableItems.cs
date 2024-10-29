@@ -33,9 +33,11 @@ public class UIConsumableItems : MonoBehaviour
         if (datas.Count == 0 || isInCooldown)
              return;
 
-        // 맨 처음 item을 사용
+        // 맨 처음 item 선택
         ItemData data = datas.Dequeue();
-        Player.Instance.StartItemEffect(data);
+
+        // 사용
+        Player.Instance.status.StartItemEffect(data);
         
         // 아이템 쿨타임 적용
         StartCooldown(data.duration);

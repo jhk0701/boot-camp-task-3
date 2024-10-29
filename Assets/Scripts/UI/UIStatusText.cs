@@ -11,7 +11,7 @@ public class UIStatusText : MonoBehaviour
         GetComponent<Stat>().OnValueChanged += ChangeValue;
     }
 
-    void ChangeValue(float val)
+    void ChangeValue(float val, float max)
     {
         text.text = val.ToString();
     }

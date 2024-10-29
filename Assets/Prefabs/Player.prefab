@@ -2016,6 +2016,7 @@ GameObject:
   - component: {fileID: 6956224301991665040}
   - component: {fileID: 8076045018038723336}
   - component: {fileID: 6705536239339707683}
+  - component: {fileID: 6721104192366544076}
   - component: {fileID: 6168916903224875141}
   - component: {fileID: 843680910146156912}
   - component: {fileID: 2410216232869163437}
@@ -2256,19 +2257,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a43374ea299fe8b4684a2c972d4b5f4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  status: {fileID: 0}
   inputController: {fileID: 0}
   interaction: {fileID: 0}
   movement: {fileID: 0}
   rb: {fileID: 0}
+  consumableItems: {fileID: 0}
+--- !u!114 &6721104192366544076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2925904514923791788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0df47bcc57340147a3aeede11b8c74c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   health: {fileID: 2089969316050874755}
   stamina: {fileID: 1274172939409670680}
   mana: {fileID: 457182590791270072}
-  staminaRecoverAmount: 10
-  manaRecoverAmount: 1
+  staminaRecoverAmount: 5
+  manaRecoverAmount: 5
   strength: {fileID: 3452713849076737755}
   defense: {fileID: 4601194404809086091}
   dexterity: {fileID: 7229701470564003918}
-  consumableItems: {fileID: 0}
 --- !u!114 &6168916903224875141
 MonoBehaviour:
   m_ObjectHideFlags: 0

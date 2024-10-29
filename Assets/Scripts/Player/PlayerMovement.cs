@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Move")]
     [SerializeField] float baseSpeed = 5f;
     [SerializeField] [Range(1.1f, 3f)] float timesOfSpeedOnRunning = 1.5f;
-    public float Speed => baseSpeed + player.dexterity.Value / 5;
+    public float Speed => baseSpeed + player.status.dexterity.Value / 5;
     [SerializeField] float staminaUsageOfRun = 1f;
     bool isRunning = false;
 
@@ -77,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
         rb.AddForce(move, ForceMode.Force);
 
         if(isRunning)
-            player.UseStatusStat(player.stamina, staminaUsageOfRun * Time.fixedDeltaTime);
+            player.status.UseStatusStat(player.status.stamina, staminaUsageOfRun * Time.fixedDeltaTime);
     }
 
     void OnJump()
@@ -85,7 +85,7 @@ public class PlayerMovement : MonoBehaviour
         if (IsGrounded())
         {
             rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
-            player.UseStatusStat(player.stamina, staminaUsageOfJump);
+            player.status.UseStatusStat(player.status.stamina, staminaUsageOfJump);
 
             OnPlayerJump?.Invoke();
         }

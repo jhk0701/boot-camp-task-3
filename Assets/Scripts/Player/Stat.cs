@@ -10,14 +10,14 @@ public class Stat : MonoBehaviour
         private set 
         {
             this.value = value;            
-            OnValueChanged?.Invoke(this.value / max);
+            OnValueChanged?.Invoke(this.value, max);
         }
     }
     [SerializeField] float startValue = 100f;
     [SerializeField] float max = 100f;
     [SerializeField] float min = 0f;
 
-    public event Action<float> OnValueChanged;
+    public event Action<float, float> OnValueChanged;
     
 
     void Start()

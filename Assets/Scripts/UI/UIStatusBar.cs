@@ -15,8 +15,8 @@ public class UIStatusBar : MonoBehaviour
         GetComponent<Stat>().OnValueChanged += ChangeValue;
     }
 
-    void ChangeValue(float val)
+    void ChangeValue(float val, float max)
     {
-        fillBar.fillAmount = val;
+        fillBar.fillAmount = val / max;
     }
 }
