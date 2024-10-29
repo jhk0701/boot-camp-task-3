@@ -10,6 +10,21 @@ public class NormalState : IMovementState
         Movement = movement;
     }
 
+
+    public void FixedUpdate()
+    {
+        if (Movement.isFalling)
+        {
+            if (Time.time - Movement.lastFallingCheck > Movement.fallingCheckRate && Movement.IsGrounded())
+            {
+                Movement.isFalling = false;
+                Movement.OnPlayerLand?.Invoke();
+            }
+        }
+
+        Move();
+    }
+
     public void Move()
     {
         float speed = Movement.isRunning ? Movement.Speed * Movement.timesOfSpeedOnRunning : Movement.Speed;
@@ -36,19 +51,5 @@ public class NormalState : IMovementState
 
             Movement.OnPlayerJump?.Invoke();
         }
-    }
-
-    public void FixedUpdate()
-    {
-        if (Movement.isFalling)
-        {
-            if (Time.time - Movement.lastFallingCheck > Movement.fallingCheckRate && Movement.IsGrounded())
-            {
-                Movement.isFalling = false;
-                Movement.OnPlayerLand?.Invoke();
-            }
-        }
-
-        Move();
     }
 }

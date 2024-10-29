@@ -6,12 +6,13 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public event Action<Vector2> OnMoveEvent;
-    public event Action<bool> OnRunEvent;
     public event Action OnJumpEvent;
-    public event Action OnInteractEvent;
     public event Action<Vector2> OnLookEvent;
+    public event Action OnInteractEvent;
     public event Action OnUseItemEvent;
     public event Action OnChangeViewEvent;
+    public event Action<bool> OnRunEvent;
+    public event Action OnInventoryEvent;
 
 
     public void OnMove(InputAction.CallbackContext context)
@@ -67,6 +68,12 @@ public class PlayerController : MonoBehaviour
             OnRunEvent?.Invoke(true);
         else if(context.phase == InputActionPhase.Canceled)
             OnRunEvent?.Invoke(false);
-    }   
+    }
+
+    public void OnInventory(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+            OnInventoryEvent?.Invoke();
+    }
 
 }

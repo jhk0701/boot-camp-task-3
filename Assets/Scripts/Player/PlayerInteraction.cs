@@ -25,8 +25,6 @@ public class PlayerInteraction : MonoBehaviour
         // 생애 주기를 함께할 것이라 별도로 구독 해제는 구현하지 않음
         PlayerController controller = Player.Instance.inputController;
         controller.OnInteractEvent += Interact;
-
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()

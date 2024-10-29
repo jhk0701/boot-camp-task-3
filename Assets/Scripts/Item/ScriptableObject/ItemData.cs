@@ -43,4 +43,6 @@ public class ItemData : ScriptableObject
 
     [Header("Item Effect")]
     public ItemEffect[] itemEffects;
+
+    public GameObject prefab;
 }

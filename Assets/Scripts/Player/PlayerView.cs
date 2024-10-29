@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerView : MonoBehaviour
 {
     Camera cam;
-
     Vector2 direction;
 
     [Header("Camera")]
@@ -21,6 +20,8 @@ public class PlayerView : MonoBehaviour
     [SerializeField] Transform thirdPerson;
     [SerializeField] AnimationCurve changingAnimation;
 
+    bool isEnable = true;
+
     void Start()
     {
         cam = Camera.main;
@@ -28,13 +29,19 @@ public class PlayerView : MonoBehaviour
         PlayerController controller = Player.Instance.inputController;
         controller.OnLookEvent += Look;
         controller.OnChangeViewEvent += ChangeView;
+        controller.OnInventoryEvent += ToggleEnable;
 
         isFirstPersonView = false;
         camRotateX = cameraAxis.localEulerAngles.x;
+        
+        isEnable = true;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void LateUpdate()
     {
+        if(!isEnable) return;
+
         // direction.x : 좌우 방향은 캐릭터
         // direction.y : 카메라 앵글
         float speed = rotateSensitive * Time.deltaTime;
@@ -60,6 +67,8 @@ public class PlayerView : MonoBehaviour
     // 1, 3인칭 변경 기능 (Tab 키)
     void ChangeView()
     {
+        if(!isEnable) return;
+
         isFirstPersonView = !isFirstPersonView;
 
         if (changeViewHandler != null)
@@ -91,5 +100,12 @@ public class PlayerView : MonoBehaviour
         }
 
         changeViewHandler = null;
+    }
+
+    void ToggleEnable()
+    {
+        isEnable = !isEnable;
+        
+        Cursor.lockState = isEnable ? CursorLockMode.Locked : CursorLockMode.None;
     }
 }

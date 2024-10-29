@@ -69,7 +69,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "UseCursor",
+                    "name": "Inventory",
                     "type": "Button",
                     "id": "eb913b36-6bcb-441d-8466-5953b59ddf1f",
                     "expectedControlType": "Button",
@@ -203,11 +203,11 @@
                 {
                     "name": "",
                     "id": "32d24146-04c8-44f5-8529-8470b5035da4",
-                    "path": "<Keyboard>/escape",
+                    "path": "<Keyboard>/i",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "UseCursor",
+                    "action": "Inventory",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

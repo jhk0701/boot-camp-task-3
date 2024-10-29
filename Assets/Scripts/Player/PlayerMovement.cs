@@ -65,14 +65,6 @@ public class PlayerMovement : MonoBehaviour
     void OnJump()
     {
         curState.Jump();
-        return;
-        if (IsGrounded())
-        {
-            rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
-            player.status.UseStatusStat(player.status.stamina, staminaUsageOfJump);
-
-            OnPlayerJump?.Invoke();
-        }
     }
 
     public void OnJumpEnd()
