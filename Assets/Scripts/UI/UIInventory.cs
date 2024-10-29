@@ -18,6 +18,8 @@ public class UIInventory : MonoBehaviour
 
     void Start()
     {
+        Player.Instance.inventory = this;
+
         Player.Instance.inputController.OnInventoryEvent += Toggle;
     }
 
@@ -33,7 +35,10 @@ public class UIInventory : MonoBehaviour
         ItemSlot slot = GetEmptySlot();
 
         if (slot == null)
+        {
+            ThrowItem(item);
             return;
+        }
 
         slot.data = item;
 
@@ -70,6 +75,7 @@ public class UIInventory : MonoBehaviour
 
     public void ThrowItem(ItemData item)
     {
-
+        Vector3 pos = transform.position + Vector3.forward;
+        Instantiate(item.prefab, pos, Quaternion.identity);
     }
 }

@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 7649734289337593562}
   - component: {fileID: 7209647678043472309}
   - component: {fileID: 5012439225498191358}
-  - component: {fileID: 5940498494554244203}
+  - component: {fileID: 5265310482862715277}
   m_Layer: 7
-  m_Name: Consume Item Health
+  m_Name: Equipment Burst
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -134,7 +134,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &5940498494554244203
+--- !u!114 &5265310482862715277
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,7 +143,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8268731820350453694}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf92300f8e188a646ba6c849e78d16cd, type: 3}
+  m_Script: {fileID: 11500000, guid: 07490f3ac269afa418946ff04c8e80a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 47567122a945bbf47a7880d5dce0ed77, type: 2}
+  data: {fileID: 11400000, guid: 38615744c762ed54d86e76e9961bebcc, type: 2}

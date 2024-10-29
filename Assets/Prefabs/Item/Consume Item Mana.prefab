@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7649734289337593562}
   - component: {fileID: 7209647678043472309}
   - component: {fileID: 5012439225498191358}
-  - component: {fileID: 3172916069822236551}
+  - component: {fileID: 234052074773695799}
   m_Layer: 7
   m_Name: Consume Item Mana
   m_TagString: Untagged
@@ -134,7 +134,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &3172916069822236551
+--- !u!114 &234052074773695799
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,7 +143,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8268731820350453694}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3dc907208c3ca334aaf4e65deae09979, type: 3}
+  m_Script: {fileID: 11500000, guid: cf92300f8e188a646ba6c849e78d16cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 907a8265783b7d34e883e29845a488ca, type: 2}

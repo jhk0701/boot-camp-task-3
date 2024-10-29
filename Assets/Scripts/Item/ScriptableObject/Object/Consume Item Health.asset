@@ -20,4 +20,6 @@ MonoBehaviour:
   duration: 10
   itemEffects:
   - target: 0
+    type: 0
     effectValue: 5
+  prefab: {fileID: 8268731820350453694, guid: 97f1df57d992a66498ab5a396d648f93, type: 3}

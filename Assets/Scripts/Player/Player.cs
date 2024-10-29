@@ -12,6 +12,7 @@ public class Player : Singleton<Player>
 
     // 해당 클래스에서 의존성 주입해줄 것.
     [HideInInspector] public UIConsumableItems consumableItems;
+    [HideInInspector] public UIInventory inventory;
 
     void Awake()
     {

@@ -21,3 +21,4 @@ MonoBehaviour:
   - target: 1
     type: 0
     effectValue: 10
+  prefab: {fileID: 8268731820350453694, guid: 100a7fcfafa04e3429664bfe431404ad, type: 3}
