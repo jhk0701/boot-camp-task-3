@@ -1,14 +1,17 @@
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.Events;
 
 public enum InteractionType
 {
     Launch,
+    // OpenDoor : 문 열기 등등
 }
 
 public class InteractableObject : MonoBehaviour, IInteractable
 {
-    public KeyCode keyToInteract = KeyCode.E;
+    // e키로 강제 고정
+    [HideInInspector] public KeyCode keyToInteract = KeyCode.E; 
     public InteractionType type;
 
     public UnityEvent OnIteract;
