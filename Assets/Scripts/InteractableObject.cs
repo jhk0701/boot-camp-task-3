@@ -14,6 +14,7 @@ public class InteractableObject : MonoBehaviour, IInteractable
     [HideInInspector] public KeyCode keyToInteract = KeyCode.E; 
     public InteractionType type;
 
+    [Space(10f)]
     public UnityEvent OnIteract;
 
     public void Interact()

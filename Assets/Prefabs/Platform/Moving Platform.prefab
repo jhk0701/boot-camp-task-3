@@ -51,7 +51,7 @@ MonoBehaviour:
   startPoint: {fileID: 1905159689258512504}
   endPoint: {fileID: 441439105706690635}
   speed: 0.1
-  stopTime: 3
+  stopTime: 5
 --- !u!1 &577958175620229441
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,57 +4,56 @@ using UnityEngine;
 [RequireComponent(typeof(Player))]
 public class PlayerMovement : MonoBehaviour
 {
-    Player player;
-    
-    Rigidbody rb;
+    [HideInInspector] public Player player;
+    [HideInInspector] public Rigidbody rb;
+    [HideInInspector] public Vector2 movement;
 
-    Vector2 movement;
+    IMovementState curState;
+    IMovementState normalState;
+    IMovementState hangingState;
 
     [Header("Move")]
-    [SerializeField] float baseSpeed = 5f;
-    [SerializeField] [Range(1.1f, 3f)] float timesOfSpeedOnRunning = 1.5f;
+    [HideInInspector] public float baseSpeed = 5f;
+    [HideInInspector] [Range(1.1f, 3f)] public float timesOfSpeedOnRunning = 1.5f;
     public float Speed => baseSpeed + player.status.dexterity.Value / 5;
-    [SerializeField] float staminaUsageOfRun = 1f;
-    bool isRunning = false;
+    [HideInInspector] public float staminaUsageOfRun = 1f;
+    [HideInInspector] public bool isRunning = false;
 
     [Header("Jump")]
-    [SerializeField] float jumpPower = 5f;
-    [SerializeField] float staminaUsageOfJump = 10f;
-    [SerializeField] LayerMask jumpableLayerMask;
-    [SerializeField] bool isFalling = false;
-    [SerializeField] float fallingCheckRate = 0.1f;
-    float lastFallingCheck;
+    public float jumpPower = 5f;
+    public float staminaUsageOfJump = 10f;
+    public LayerMask jumpableLayerMask;
+    [HideInInspector] public bool isFalling = false;
+    [HideInInspector] public float fallingCheckRate = 0.1f;
+    [HideInInspector] public float lastFallingCheck;
 
-    public event Action OnPlayerRun;
-    public event Action OnPlayerJump;
-    public event Action OnPlayerFall;
-    public event Action OnPlayerLand;
+    public Action OnPlayerRun;
+    public Action OnPlayerJump;
+    public Action OnPlayerFall;
+    public Action OnPlayerLand;
 
+    void Awake()
+    {
+        normalState = new NormalState(this);
+        hangingState = new HangingState(this);    
+    }
 
     void Start()
     {
         player = Player.Instance;
         rb = player.rb;
 
-        // 생애주기를 함께할 것이라 구독해제는 따로 구현하지 않음
         PlayerController controller = player.inputController;
         controller.OnMoveEvent += OnMove;
         controller.OnJumpEvent += OnJump;
         controller.OnRunEvent += OnRun;
+
+        ChangeState(normalState);
     }
 
     void FixedUpdate()
     {
-        if (isFalling)
-        {
-            if (Time.time - lastFallingCheck > fallingCheckRate && IsGrounded())
-            {
-                isFalling = false;
-                OnPlayerLand?.Invoke();
-            }
-        }
-
-        Move();
+        curState.FixedUpdate();
     }
 
 
@@ -63,25 +62,10 @@ public class PlayerMovement : MonoBehaviour
         movement = input;
     }
 
-    void Move()
-    {
-        float speed = isRunning ? Speed * timesOfSpeedOnRunning : Speed;
-        speed *= isFalling ? 0.5f : 1f;
-        
-        Vector3 move = transform.forward * movement.y + transform.right * movement.x;
-        move *= speed * rb.mass * 1.5f;
-
-        // move.y = rb.velocity.y;
-        // rb.velocity = move;
-        // 수정 : 문제 내용에 따른 AddForce로 구현
-        rb.AddForce(move, ForceMode.Force);
-
-        if(isRunning)
-            player.status.UseStatusStat(player.status.stamina, staminaUsageOfRun * Time.fixedDeltaTime);
-    }
-
     void OnJump()
     {
+        curState.Jump();
+        return;
         if (IsGrounded())
         {
             rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
@@ -105,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    bool IsGrounded()
+    public bool IsGrounded()
     {
         Ray[] rays = new Ray[]
         {
@@ -129,5 +113,10 @@ public class PlayerMovement : MonoBehaviour
     void OnRun(bool running)
     {
         isRunning = running;
+    }
+
+    void ChangeState(IMovementState movementState)
+    {
+        curState = movementState;
     }
 }

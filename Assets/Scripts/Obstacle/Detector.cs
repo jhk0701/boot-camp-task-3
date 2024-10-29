@@ -11,6 +11,7 @@ public class Detector : MonoBehaviour
     [SerializeField] float detectDistance = 5f;
     [SerializeField] Transform detectPoint;
 
+    [Space(10f)]
     public UnityEvent OnDetect;
 
     void Start()
