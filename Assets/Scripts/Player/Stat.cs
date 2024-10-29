@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class StatusStat : MonoBehaviour
+public class Stat : MonoBehaviour
 {
     [SerializeField] float value;
     public float Value 
@@ -13,6 +13,7 @@ public class StatusStat : MonoBehaviour
             OnValueChanged?.Invoke(this.value / max);
         }
     }
+    [SerializeField] float startValue = 100f;
     [SerializeField] float max = 100f;
     [SerializeField] float min = 0f;
 
@@ -21,9 +22,8 @@ public class StatusStat : MonoBehaviour
 
     void Start()
     {
-        Value = max;
+        Value = startValue;
     }
-
 
     public void Add(float amount)
     {

@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Move")]
     [SerializeField] float baseSpeed = 5f;
     [SerializeField] [Range(1.1f, 3f)] float timesOfSpeedOnRunning = 1.5f;
-    public float Speed => baseSpeed + player.dexterity / 5;
+    public float Speed => baseSpeed + player.dexterity.Value / 5;
     [SerializeField] float staminaUsageOfRun = 1f;
     bool isRunning = false;
 

@@ -2,22 +2,18 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Image))]
-[RequireComponent(typeof(StatusStat))]
+[RequireComponent(typeof(Stat))]
 public class UIStatusBar : MonoBehaviour
 {
     [SerializeField] Image fillBar;
 
-    void Awake()
+    void Start()
     {
         if(fillBar == null)
             fillBar = GetComponentInChildren<Image>();
-    }
 
-    void Start()
-    {
-        GetComponent<StatusStat>().OnValueChanged += ChangeValue;
+        GetComponent<Stat>().OnValueChanged += ChangeValue;
     }
-
 
     void ChangeValue(float val)
     {

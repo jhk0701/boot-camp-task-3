@@ -12,9 +12,9 @@ public class Player : Singleton<Player>, IDamagable
 
     [Header("Status Stat")]
     // 인스펙터에서 직접 할당함
-    public StatusStat health;
-    public StatusStat stamina;
-    public StatusStat mana;
+    public Stat health;
+    public Stat stamina;
+    public Stat mana;
 
     [Space(10f)]
     [Tooltip("프레임 당 스태미너 회복량")]
@@ -22,9 +22,9 @@ public class Player : Singleton<Player>, IDamagable
     [SerializeField] float manaRecoverAmount;
 
     [Header("Ability Stat")]
-    public float strength;
-    public float defense;
-    public float dexterity;
+    public Stat strength;
+    public Stat defense;
+    public Stat dexterity;
 
     [Header("Item")]
     // 해당 클래스에서 의존성 주입해줄 것.
@@ -47,12 +47,12 @@ public class Player : Singleton<Player>, IDamagable
     }
 
 
-    public void UseStatusStat(StatusStat stat, float amount)
+    public void UseStatusStat(Stat stat, float amount)
     {
         stat.Subtract(amount);
     }
 
-    public void RecoverStatusStat(StatusStat stat, float amount)
+    public void RecoverStatusStat(Stat stat, float amount)
     {
         stat.Add(amount);
     }
