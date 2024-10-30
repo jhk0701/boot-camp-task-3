@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5012439225498191358}
   - component: {fileID: 5265310482862715277}
   m_Layer: 7
-  m_Name: Equipment Burst
+  m_Name: Equipment Sheild
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -146,4 +146,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07490f3ac269afa418946ff04c8e80a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 38615744c762ed54d86e76e9961bebcc, type: 2}
+  data: {fileID: 11400000, guid: 53d685d4675313f45b8f9e295ee174c1, type: 2}

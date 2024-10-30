@@ -9,7 +9,10 @@ public class Stat : MonoBehaviour
         get { return value; } 
         private set 
         {
-            this.value = value;            
+            this.value = value;
+            if(this.value < 0f)
+                this.Value = 0f;
+
             OnValueChanged?.Invoke(this.value, max);
         }
     }
@@ -21,6 +24,12 @@ public class Stat : MonoBehaviour
     
 
     void Start()
+    {
+        Initialize();
+    }
+
+
+    public void Initialize()
     {
         Value = startValue;
     }
@@ -39,5 +48,6 @@ public class Stat : MonoBehaviour
             return;
 
         Value = Mathf.Max(Value - amount, min);
+
     }
 }

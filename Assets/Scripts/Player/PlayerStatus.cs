@@ -24,6 +24,11 @@ public class PlayerStatus : MonoBehaviour, IDamagable
 
     WaitForSecondsRealtime waitForASecond = new WaitForSecondsRealtime(1f);
 
+    void Start()
+    {
+        health.OnValueChanged += OnPlayerDead;
+    }
+
 
     void Update()
     {
@@ -46,6 +51,15 @@ public class PlayerStatus : MonoBehaviour, IDamagable
         float defenseValue = defense.Value / 3;
         float damage = defenseValue >= amount ? 0f : amount - defenseValue;
         UseStatusStat(health, damage);
+    }
+
+    public void OnPlayerDead(float health, float max)
+    {
+        if(health <= 0f)
+        {
+            Debug.Log("Dead");
+            GameManager.Instance.ReviveOnSavePoint();
+        }
     }
 
 

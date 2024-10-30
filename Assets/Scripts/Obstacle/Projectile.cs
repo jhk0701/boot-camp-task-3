@@ -13,6 +13,7 @@ public class Projectile : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
+
     public void Fire(Vector3 force)
     {
         rb.AddForce(force, ForceMode.Impulse);

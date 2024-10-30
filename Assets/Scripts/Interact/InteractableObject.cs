@@ -6,7 +6,7 @@ public enum InteractionType
 {
     Launch,
     Open, // OpenDoor : 문 열기 등등
-    
+    Register,
 }
 
 public class InteractableObject : MonoBehaviour, IInteractable
@@ -31,6 +31,8 @@ public class InteractableObject : MonoBehaviour, IInteractable
                 return "발사하기";
             case InteractionType.Open :
                 return "열기";
+            case InteractionType.Register :
+                return "등록하기";
             default :
                 return "상호작용하기";
         }
