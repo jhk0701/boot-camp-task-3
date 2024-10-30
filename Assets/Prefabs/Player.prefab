@@ -2222,7 +2222,7 @@ MonoBehaviour:
   fallingCheckRate: 0.1
   lastFallingCheck: 0
   isHanging: 0
-  hangingDistance: 0.5
+  hangingDistance: 1
   hangableMask:
     serializedVersion: 2
     m_Bits: 512

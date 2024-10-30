@@ -61,9 +61,11 @@ public class PlayerAnimatorController : MonoBehaviour
         animator.SetBool(IsFalling, false);
     }
 
-    void Hang()
+    void Hang(bool isHanging)
     {
-        animator.SetTrigger(Hanging);
-        animator.SetBool(IsHanging, true);
+        if (isHanging)
+            animator.SetTrigger(Hanging);
+            
+        animator.SetBool(IsHanging, isHanging);
     }
 }

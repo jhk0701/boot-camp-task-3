@@ -9,8 +9,8 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public Vector2 movement;
 
     IMovementState curState;
-    IMovementState normalState;
-    IMovementState hangingState;
+    public IMovementState NormalState { get; private set; }
+    public IMovementState HangingState { get; private set; }
 
     [HideInInspector] public float baseSpeed = 5f;
     [HideInInspector] [Range(1.1f, 3f)] public float timesOfSpeedOnRunning = 1.5f;
@@ -35,19 +35,21 @@ public class PlayerMovement : MonoBehaviour
     [Header("Hang")]
     public bool isHanging = false;
     public float hangingDistance = 1f;
+    [Range(0f, 180f)]
+    public float checkAngleOfHangable = 120f;
     public LayerMask hangableMask;
 
     public Action<bool> OnPlayerRun;
     public Action OnPlayerJump;
     public Action OnPlayerFall;
     public Action OnPlayerLand;
-    public Action OnPlayerHang;
+    public Action<bool> OnPlayerHang;
 
 
     void Awake()
     {
-        normalState = new NormalState(this);
-        hangingState = new HangingState(this);    
+        NormalState = new NormalState(this);
+        HangingState = new HangingState(this);    
     }
 
     void Start()
@@ -59,9 +61,9 @@ public class PlayerMovement : MonoBehaviour
         input.OnMoveEvent += OnMove;
         input.OnJumpEvent += OnJump;
         input.OnRunEvent += OnRun;
-        input.OnInteractEvent += OnHang;
+        input.OnInteractEvent += OnHanging;
 
-        ChangeState(normalState);
+        ChangeState(NormalState);
     }
 
     void FixedUpdate()
@@ -132,27 +134,55 @@ public class PlayerMovement : MonoBehaviour
         OnPlayerFall?.Invoke();
     }
 
-    public void OnHang()
+    public void OnHanging()
     {
-        if (IsHangable(out Vector3 point))
+        if (isHanging) return;
+
+        if (IsHangable(out Vector3 hitPoint))
         {
-            Debug.Log($"Hanging : {point}");
+            transform.position = hitPoint - transform.forward * 0.15f;
+
+            isHanging = true;
+            OnPlayerHang?.Invoke(isHanging);
+            ChangeState(HangingState); 
         }
+    }
+
+    public void OffHanging()
+    {
+        isHanging = false;
+        OnPlayerHang?.Invoke(isHanging);
+        ChangeState(NormalState);
     }
 
     public bool IsHangable(out Vector3 hitPoint)
     {
-        Ray ray = new Ray(transform.position + transform.forward, transform.forward);
-        if(Physics.Raycast(ray, out RaycastHit hit, hangingDistance, hangableMask))
+        Vector3 origin = transform.position + transform.forward * 0.1f + Vector3.up;
+        Ray[] rays = new Ray[]
         {
-            hitPoint = hit.point;
-            return true;
-        }
-        else
+            new Ray(origin, transform.forward),
+            // new Ray(origin, transform.forward),
+            // new Ray(origin, transform.forward),
+            // new Ray(origin, transform.forward),
+            // new Ray(origin, transform.forward),
+        };
+
+        for (int i = 0; i < rays.Length; i++)
         {
-            hitPoint = Vector3.zero;
-            return false;
+            if(Physics.Raycast(rays[i], out RaycastHit hit, hangingDistance, hangableMask))
+            {
+                hitPoint = hit.point;
+                return true;
+            }
         }
+
+        hitPoint = Vector3.zero;
+        return false;
     }
 
+    [ContextMenu("DebugDraw")]
+    public void DebugDraw()
+    {
+
+    }
 }

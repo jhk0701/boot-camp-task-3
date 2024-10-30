@@ -13,6 +13,7 @@ public class NormalState : IMovementState
     public void FixedUpdate()
     {
         CheckFalling();
+        
         Move();
     }
 

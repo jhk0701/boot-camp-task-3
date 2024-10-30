@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.Mathematics;
 using UnityEngine;
 
 public class PlayerView : MonoBehaviour
@@ -20,7 +19,8 @@ public class PlayerView : MonoBehaviour
     [SerializeField] Transform thirdPerson;
     [SerializeField] AnimationCurve changingAnimation;
 
-    bool isEnable = true;
+    bool canLook = true;
+    bool canRotateY = true;
 
     void Start()
     {
@@ -29,18 +29,21 @@ public class PlayerView : MonoBehaviour
         PlayerInputController input = Player.Instance.inputController;
         input.OnLookEvent += Look;
         input.OnChangeViewEvent += ChangeView;
-        input.OnInventoryEvent += ToggleEnable;
+        input.OnInventoryEvent += ToggleCanLook;
+
+        Player.Instance.movement.OnPlayerHang += ToggleCanRotateY;
 
         isFirstPersonView = false;
         camRotateX = cameraAxis.localEulerAngles.x;
         
-        isEnable = true;
+        canLook = true;
+        canRotateY = true;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     void LateUpdate()
     {
-        if(!isEnable) 
+        if(!canLook) 
             return;
 
         MoveCamera();
@@ -51,8 +54,9 @@ public class PlayerView : MonoBehaviour
         // direction.x : 좌우 방향은 캐릭터
         // direction.y : 카메라 앵글
         float speed = rotateSensitive * Time.deltaTime;
-
-        transform.Rotate(Vector3.up * direction.x * speed);
+        
+        if (canRotateY)
+            transform.Rotate(Vector3.up * direction.x * speed);
 
         camRotateX += speed * -direction.y;
 
@@ -72,7 +76,7 @@ public class PlayerView : MonoBehaviour
     // 1, 3인칭 변경 기능 (Tab 키)
     void ChangeView()
     {
-        if(!isEnable) return;
+        if(!canLook) return;
 
         isFirstPersonView = !isFirstPersonView;
 
@@ -107,10 +111,14 @@ public class PlayerView : MonoBehaviour
         changeViewHandler = null;
     }
 
-    void ToggleEnable()
+    void ToggleCanLook()
     {
-        isEnable = !isEnable;
-        
-        Cursor.lockState = isEnable ? CursorLockMode.Locked : CursorLockMode.None;
+        canLook = !canLook;
+        Cursor.lockState = canLook ? CursorLockMode.Locked : CursorLockMode.None;
+    }
+
+    void ToggleCanRotateY(bool enable)
+    {
+        canRotateY = !enable;
     }
 }
