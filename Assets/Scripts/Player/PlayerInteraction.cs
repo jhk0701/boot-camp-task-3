@@ -50,6 +50,7 @@ public class PlayerInteraction : MonoBehaviour
         }
         else
         {
+            detectedObject = null;
             OnDetectItem?.Invoke(null);
             OnDetectObject?.Invoke(null);
         }

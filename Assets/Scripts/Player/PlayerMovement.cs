@@ -34,6 +34,8 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Hang")]
     public bool isHanging = false;
+    public float hangingDistance = 1f;
+    public LayerMask hangableMask;
 
     public Action<bool> OnPlayerRun;
     public Action OnPlayerJump;
@@ -57,6 +59,7 @@ public class PlayerMovement : MonoBehaviour
         input.OnMoveEvent += OnMove;
         input.OnJumpEvent += OnJump;
         input.OnRunEvent += OnRun;
+        input.OnInteractEvent += OnHang;
 
         ChangeState(normalState);
     }
@@ -81,6 +84,11 @@ public class PlayerMovement : MonoBehaviour
         curState.FixedUpdate();
     }
 
+
+    void ChangeState(IMovementState movementState)
+    {
+        curState = movementState;
+    }
 
     void OnMove(Vector2 input)
     {
@@ -139,8 +147,27 @@ public class PlayerMovement : MonoBehaviour
         OnPlayerFall?.Invoke();
     }
 
-    void ChangeState(IMovementState movementState)
+    public void OnHang()
     {
-        curState = movementState;
+        if (IsHangable(out Vector3 point))
+        {
+            Debug.Log($"Hanging : {point}");
+        }
     }
+
+    public bool IsHangable(out Vector3 hitPoint)
+    {
+        Ray ray = new Ray(transform.position + transform.forward, transform.forward);
+        if(Physics.Raycast(ray, out RaycastHit hit, hangingDistance, hangableMask))
+        {
+            hitPoint = hit.point;
+            return true;
+        }
+        else
+        {
+            hitPoint = Vector3.zero;
+            return false;
+        }
+    }
+
 }
