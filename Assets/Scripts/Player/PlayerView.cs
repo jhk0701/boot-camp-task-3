@@ -40,8 +40,14 @@ public class PlayerView : MonoBehaviour
 
     void LateUpdate()
     {
-        if(!isEnable) return;
+        if(!isEnable) 
+            return;
 
+        MoveCamera();
+    }
+    
+    void MoveCamera()
+    {
         // direction.x : 좌우 방향은 캐릭터
         // direction.y : 카메라 앵글
         float speed = rotateSensitive * Time.deltaTime;
@@ -57,7 +63,6 @@ public class PlayerView : MonoBehaviour
 
         cameraAxis.localEulerAngles = new Vector3(camRotateX, 0f, 0f);
     }
-    
 
     void Look(Vector2 dir)
     {
