@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2735173654602270249}
   - component: {fileID: 1712782809816148027}
   - component: {fileID: 1373811243667725995}
+  - component: {fileID: 7182706383488208752}
   m_Layer: 0
   m_Name: Trap
   m_TagString: Untagged
@@ -133,6 +134,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.0000004, y: 2.000001, z: 1.0000005}
   m_Center: {x: 0.00000005960466, y: 2.5410992e-21, z: -0.00000008940699}
+--- !u!114 &7182706383488208752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2317054757814510529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bac58d824022bd4896bfbf9ea333f5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 5
 --- !u!1 &3115320603091782265
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,6 +226,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f73745d6b204d64bb0c220a16d51c31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trapRigidBody: {fileID: 1712782809816148027}
-  direction: {x: 1, y: 0, z: 0}
+  projectile: {fileID: 7182706383488208752}
+  firePoint: {fileID: 6698345469041418427}
   power: 10

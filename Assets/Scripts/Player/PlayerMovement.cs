@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [HideInInspector] public Player player;
-
     [HideInInspector] public Rigidbody rb;
     [HideInInspector] public Vector2 movement;
 
@@ -13,19 +12,23 @@ public class PlayerMovement : MonoBehaviour
     IMovementState normalState;
     IMovementState hangingState;
 
-    [Header("Move")]
     [HideInInspector] public float baseSpeed = 5f;
     [HideInInspector] [Range(1.1f, 3f)] public float timesOfSpeedOnRunning = 1.5f;
     public float Speed => baseSpeed + player.status.dexterity.Value / 5;
+
+    [Header("Run")]
+    public bool isRunning = false;
     public float minStaminaForRun = 10f;
     public float staminaUsageOfRun = 1f;
-    [HideInInspector] public bool isRunning = false;
 
     [Header("Jump")]
+    public bool isJumping = false;
     public float jumpPower = 5f;
     public float staminaUsageOfJump = 10f;
     public LayerMask jumpableLayerMask;
-    [HideInInspector] public bool isFalling = false;
+
+    [Header("Fall")]
+    public bool isFalling = false;
     [HideInInspector] public float fallingCheckRate = 0.1f;
     [HideInInspector] public float lastFallingCheck;
 
@@ -33,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
     public Action OnPlayerJump;
     public Action OnPlayerFall;
     public Action OnPlayerLand;
+
 
     void Awake()
     {
@@ -55,6 +59,21 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (Time.time - lastFallingCheck > fallingCheckRate)
+        {
+            lastFallingCheck = Time.time;
+            if (isFalling && IsGrounded())
+            {
+                lastFallingCheck = Time.time;
+                isFalling = false;
+                OnPlayerLand?.Invoke();
+            }
+            else if(!isFalling && !isJumping && !IsGrounded())
+            {
+                Fall();
+            }
+        }
+
         curState.FixedUpdate();
     }
 
@@ -64,6 +83,12 @@ public class PlayerMovement : MonoBehaviour
         movement = input;
     }
 
+    public void OnRun(bool running)
+    {
+        isRunning = player.status.stamina.Value >= minStaminaForRun && running;
+        OnPlayerRun?.Invoke(isRunning);
+    }
+
     void OnJump()
     {
         curState.Jump();
@@ -71,15 +96,15 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnJumpEnd()
     {
+        isJumping = false;
+
         if (IsGrounded())
         {
             isFalling = false;
         }
         else
         {
-            isFalling = true;
-            lastFallingCheck = Time.time;
-            OnPlayerFall?.Invoke();
+            Fall();
         }
     }
 
@@ -104,10 +129,11 @@ public class PlayerMovement : MonoBehaviour
         return false;
     }
 
-    public void OnRun(bool running)
+    public void Fall()
     {
-        isRunning = player.status.stamina.Value >= minStaminaForRun && running;
-        OnPlayerRun?.Invoke(isRunning);
+        isFalling = true;
+        lastFallingCheck = Time.time;
+        OnPlayerFall?.Invoke();
     }
 
     void ChangeState(IMovementState movementState)

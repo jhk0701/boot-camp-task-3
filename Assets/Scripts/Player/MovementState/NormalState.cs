@@ -12,15 +12,6 @@ public class NormalState : IMovementState
 
     public void FixedUpdate()
     {
-        if (Movement.isFalling)
-        {
-            if (Time.time - Movement.lastFallingCheck > Movement.fallingCheckRate && Movement.IsGrounded())
-            {
-                Movement.isFalling = false;
-                Movement.OnPlayerLand?.Invoke();
-            }
-        }
-
         Move();
     }
 
@@ -53,6 +44,7 @@ public class NormalState : IMovementState
             Movement.rb.AddForce(Vector3.up * Movement.jumpPower, ForceMode.Impulse);
             Movement.player.status.UseStatusStat(Movement.player.status.stamina, Movement.staminaUsageOfJump);
 
+            Movement.isJumping = true;
             Movement.OnPlayerJump?.Invoke();
         }
     }

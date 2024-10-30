@@ -43,7 +43,9 @@ public class PlayerStatus : MonoBehaviour, IDamagable
     
     public void TakeDamage(float amount)
     {
-        UseStatusStat(health, amount);
+        float defenseValue = defense.Value / 3;
+        float damage = defenseValue >= amount ? 0f : amount - defenseValue;
+        UseStatusStat(health, damage);
     }
 
 

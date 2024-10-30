@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class Trap : MonoBehaviour
 {
-    [SerializeField] Rigidbody trapRigidBody;
-    [SerializeField] Vector3 direction;
+    [SerializeField] Projectile projectile;
+    [SerializeField] Transform firePoint;
     [SerializeField] float power;
 
     public void Activate()
     {
-        if(trapRigidBody == null)
+        if (projectile == null)
             return;
 
-        trapRigidBody.AddForce(direction * power, ForceMode.Impulse);
-    }
+        if (firePoint == null)
+            firePoint = transform;
 
+        projectile.Fire(firePoint.forward * power);
+    }
 }
