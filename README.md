@@ -36,3 +36,5 @@
 >> * 소모형 아이템 추가
 >> * Npc 추가
 
+## 트러블슈팅 관련 내용
+[내일배움캠프 32일차 TIL : Unity Event](https://velog.io/@jhk0701/%EB%82%B4%EC%9D%BC%EB%B0%B0%EC%9B%80%EC%BA%A0%ED%94%84-32%EC%9D%BC%EC%B0%A8-TIL-Unity-Event)
