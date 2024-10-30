@@ -11,7 +11,7 @@ public class Stat : MonoBehaviour
         {
             this.value = value;
             if(this.value < 0f)
-                this.Value = 0f;
+                this.value = 0f;
 
             OnValueChanged?.Invoke(this.value, max);
         }

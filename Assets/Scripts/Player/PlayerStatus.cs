@@ -29,7 +29,6 @@ public class PlayerStatus : MonoBehaviour, IDamagable
         health.OnValueChanged += OnPlayerDead;
     }
 
-
     void Update()
     {
         RecoverStatusStat(stamina, staminaRecoverAmount * Time.deltaTime);
@@ -57,7 +56,6 @@ public class PlayerStatus : MonoBehaviour, IDamagable
     {
         if(health <= 0f)
         {
-            Debug.Log("Dead");
             GameManager.Instance.ReviveOnSavePoint();
         }
     }
@@ -71,7 +69,6 @@ public class PlayerStatus : MonoBehaviour, IDamagable
         ItemEffectHandler = StartCoroutine(AdjustItemEffect(item));
     }
 
-    // TODO : 리팩토링 반드시 할 것
     Coroutine ItemEffectHandler;
     IEnumerator AdjustItemEffect(ItemData item)
     {
@@ -150,7 +147,7 @@ public class PlayerStatus : MonoBehaviour, IDamagable
         ItemEffectHandler = null;
     }
 
-    public void AdjustEquipment(ItemData data)
+    public void AdjustEffect(ItemData data)
     {
         for (int i = 0; i < data.itemEffects.Length; i++)
         {
@@ -169,7 +166,7 @@ public class PlayerStatus : MonoBehaviour, IDamagable
         }
     }
 
-    public void RemoveEquipment(ItemData data)
+    public void RemoveEffect(ItemData data)
     {
         for (int i = 0; i < data.itemEffects.Length; i++)
         {

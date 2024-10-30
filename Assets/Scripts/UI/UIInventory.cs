@@ -104,7 +104,7 @@ public class UIInventory : MonoBehaviour
         slot.data = slots[index].data;
         slots[index].data = null;
 
-        Player.Instance.status.AdjustEquipment(slot.data);
+        Player.Instance.status.AdjustEffect(slot.data);
 
         UpdateInventoryUI();
         UpdateEquipmentUI();
@@ -123,7 +123,7 @@ public class UIInventory : MonoBehaviour
         slot.data = currentEquipped[index].data;
         currentEquipped[index].data = null;
 
-        Player.Instance.status.RemoveEquipment(slot.data);
+        Player.Instance.status.RemoveEEffect(slot.data);
 
         UpdateInventoryUI();
         UpdateEquipmentUI();
