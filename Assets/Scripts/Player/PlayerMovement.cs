@@ -32,10 +32,14 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public float fallingCheckRate = 0.1f;
     [HideInInspector] public float lastFallingCheck;
 
+    [Header("Hang")]
+    public bool isHanging = false;
+
     public Action<bool> OnPlayerRun;
     public Action OnPlayerJump;
     public Action OnPlayerFall;
     public Action OnPlayerLand;
+    public Action OnPlayerHang;
 
 
     void Awake()
@@ -59,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (Time.time - lastFallingCheck > fallingCheckRate)
+        if (Time.time - lastFallingCheck > fallingCheckRate && !isHanging)
         {
             lastFallingCheck = Time.time;
             

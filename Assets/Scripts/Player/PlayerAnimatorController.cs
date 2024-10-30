@@ -10,6 +10,8 @@ public class PlayerAnimatorController : MonoBehaviour
     readonly int IsRunning = Animator.StringToHash("IsRunning");
     readonly int Falling = Animator.StringToHash("Falling");
     readonly int IsFalling = Animator.StringToHash("IsFalling");
+    readonly int Hanging = Animator.StringToHash("Hanging");
+    readonly int IsHanging = Animator.StringToHash("IsHanging");
 
 
     void Awake()
@@ -28,7 +30,7 @@ public class PlayerAnimatorController : MonoBehaviour
         player.movement.OnPlayerJump += Jump;
         player.movement.OnPlayerFall += Fall;
         player.movement.OnPlayerLand += Land;
-
+        player.movement.OnPlayerHang += Hang;
     }
 
     
@@ -57,5 +59,11 @@ public class PlayerAnimatorController : MonoBehaviour
     void Land()
     {
         animator.SetBool(IsFalling, false);
+    }
+
+    void Hang()
+    {
+        animator.SetTrigger(Hanging);
+        animator.SetBool(IsHanging, true);
     }
 }

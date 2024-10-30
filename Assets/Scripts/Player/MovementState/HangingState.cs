@@ -9,6 +9,13 @@ public class HangingState : IMovementState
         Movement = movement;
     }
 
+    public void FixedUpdate()
+    {
+        //
+        Move();
+    }
+
+
     public void Move()
     {
 
@@ -16,11 +23,6 @@ public class HangingState : IMovementState
 
     public void Jump()
     {
-        
-    }
-
-    public void FixedUpdate()
-    {
-        
+        // 매달린 상태에서 점프 -> 풀기
     }
 }
