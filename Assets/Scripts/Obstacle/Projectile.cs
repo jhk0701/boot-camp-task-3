@@ -7,7 +7,6 @@ public class Projectile : MonoBehaviour
 {
     Rigidbody rb;
     public float damage = 5f;
-    Vector3 curForce;
 
     void Awake()
     {
@@ -17,7 +16,6 @@ public class Projectile : MonoBehaviour
     public void Fire(Vector3 force)
     {
         rb.AddForce(force, ForceMode.Impulse);
-        curForce = force;
     }
 
     void OnCollisionEnter(Collision other)

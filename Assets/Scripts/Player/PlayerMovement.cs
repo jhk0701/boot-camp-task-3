@@ -62,9 +62,9 @@ public class PlayerMovement : MonoBehaviour
         if (Time.time - lastFallingCheck > fallingCheckRate)
         {
             lastFallingCheck = Time.time;
+            
             if (isFalling && IsGrounded())
             {
-                lastFallingCheck = Time.time;
                 isFalling = false;
                 OnPlayerLand?.Invoke();
             }
@@ -132,7 +132,6 @@ public class PlayerMovement : MonoBehaviour
     public void Fall()
     {
         isFalling = true;
-        lastFallingCheck = Time.time;
         OnPlayerFall?.Invoke();
     }
 

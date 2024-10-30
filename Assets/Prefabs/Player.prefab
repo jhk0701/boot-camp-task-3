@@ -2209,10 +2209,12 @@ MonoBehaviour:
   movement: {x: 0, y: 0}
   baseSpeed: 5
   timesOfSpeedOnRunning: 1.5
-  staminaUsageOfRun: 20
   isRunning: 0
+  minStaminaForRun: 10
+  staminaUsageOfRun: 10
+  isJumping: 0
   jumpPower: 10
-  staminaUsageOfJump: 10
+  staminaUsageOfJump: 5
   jumpableLayerMask:
     serializedVersion: 2
     m_Bits: 256
