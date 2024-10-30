@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [HideInInspector] public Player player;
+
     [HideInInspector] public Rigidbody rb;
     [HideInInspector] public Vector2 movement;
 
@@ -16,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public float baseSpeed = 5f;
     [HideInInspector] [Range(1.1f, 3f)] public float timesOfSpeedOnRunning = 1.5f;
     public float Speed => baseSpeed + player.status.dexterity.Value / 5;
+    public float minStaminaForRun = 10f;
     public float staminaUsageOfRun = 1f;
     [HideInInspector] public bool isRunning = false;
 
@@ -27,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public float fallingCheckRate = 0.1f;
     [HideInInspector] public float lastFallingCheck;
 
-    public Action OnPlayerRun;
+    public Action<bool> OnPlayerRun;
     public Action OnPlayerJump;
     public Action OnPlayerFall;
     public Action OnPlayerLand;
@@ -43,10 +45,10 @@ public class PlayerMovement : MonoBehaviour
         player = Player.Instance;
         rb = player.rb;
 
-        PlayerController controller = player.inputController;
-        controller.OnMoveEvent += OnMove;
-        controller.OnJumpEvent += OnJump;
-        controller.OnRunEvent += OnRun;
+        PlayerInputController input = player.inputController;
+        input.OnMoveEvent += OnMove;
+        input.OnJumpEvent += OnJump;
+        input.OnRunEvent += OnRun;
 
         ChangeState(normalState);
     }
@@ -102,9 +104,10 @@ public class PlayerMovement : MonoBehaviour
         return false;
     }
 
-    void OnRun(bool running)
+    public void OnRun(bool running)
     {
-        isRunning = running;
+        isRunning = player.status.stamina.Value >= minStaminaForRun && running;
+        OnPlayerRun?.Invoke(isRunning);
     }
 
     void ChangeState(IMovementState movementState)

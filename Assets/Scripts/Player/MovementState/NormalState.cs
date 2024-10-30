@@ -26,6 +26,8 @@ public class NormalState : IMovementState
 
     public void Move()
     {
+        Movement.OnRun(Movement.isRunning);
+
         float speed = Movement.isRunning ? Movement.Speed * Movement.timesOfSpeedOnRunning : Movement.Speed;
         speed *= Movement.isFalling ? 0.5f : 1f;
         
@@ -37,12 +39,15 @@ public class NormalState : IMovementState
         // 수정 : 문제 내용에 따른 AddForce로 구현
         Movement.rb.AddForce(move, ForceMode.Force);
 
-        if(Movement.isRunning)
+        if (Movement.isRunning)
             Movement.player.status.UseStatusStat(Movement.player.status.stamina, Movement.staminaUsageOfRun * Time.fixedDeltaTime);
     }
 
     public void Jump()
     {
+        if (Movement.player.status.stamina.Value < Movement.staminaUsageOfJump)
+            return;
+
         if (Movement.IsGrounded())
         {
             Movement.rb.AddForce(Vector3.up * Movement.jumpPower, ForceMode.Impulse);

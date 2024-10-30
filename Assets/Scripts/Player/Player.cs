@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : Singleton<Player>
 {
     [HideInInspector] public PlayerStatus status;
-    [HideInInspector] public PlayerController inputController;
+    [HideInInspector] public PlayerInputController inputController;
     [HideInInspector] public PlayerInteraction interaction;
     [HideInInspector] public PlayerMovement movement;
     [HideInInspector] public Rigidbody rb;
@@ -17,7 +17,7 @@ public class Player : Singleton<Player>
     void Awake()
     {
         status = GetComponent<PlayerStatus>();
-        inputController = GetComponent<PlayerController>();
+        inputController = GetComponent<PlayerInputController>();
         interaction = GetComponent<PlayerInteraction>();
         movement = GetComponent<PlayerMovement>();
 

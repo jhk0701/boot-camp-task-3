@@ -23,9 +23,8 @@ public class PlayerAnimatorController : MonoBehaviour
         // 생애 주기를 함께할 것이라 별도로 구독해제하지 않음
         Player player = Player.Instance;
         player.inputController.OnMoveEvent += Move;
-        player.inputController.OnRunEvent += Run;
-
-        // player.inputController.OnJumpEvent += Jump; // 실제 캐릭터가 점프할 때 호출
+        
+        player.movement.OnPlayerRun += Run;
         player.movement.OnPlayerJump += Jump;
         player.movement.OnPlayerFall += Fall;
         player.movement.OnPlayerLand += Land;

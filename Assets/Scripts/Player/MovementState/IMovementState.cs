@@ -4,6 +4,5 @@ public interface IMovementState
 
     void Move();
     void Jump();
-
     void FixedUpdate();
 }

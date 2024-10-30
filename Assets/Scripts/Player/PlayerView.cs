@@ -26,10 +26,10 @@ public class PlayerView : MonoBehaviour
     {
         cam = Camera.main;
 
-        PlayerController controller = Player.Instance.inputController;
-        controller.OnLookEvent += Look;
-        controller.OnChangeViewEvent += ChangeView;
-        controller.OnInventoryEvent += ToggleEnable;
+        PlayerInputController input = Player.Instance.inputController;
+        input.OnLookEvent += Look;
+        input.OnChangeViewEvent += ChangeView;
+        input.OnInventoryEvent += ToggleEnable;
 
         isFirstPersonView = false;
         camRotateX = cameraAxis.localEulerAngles.x;

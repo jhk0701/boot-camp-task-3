@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 // Player Input의 입력을 받아 처리할 클래스
-public class PlayerController : MonoBehaviour
+public class PlayerInputController : MonoBehaviour
 {
     public event Action<Vector2> OnMoveEvent;
     public event Action OnJumpEvent;

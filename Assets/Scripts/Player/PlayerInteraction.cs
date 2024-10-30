@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerController))]
+[RequireComponent(typeof(PlayerInputController))]
 public class PlayerInteraction : MonoBehaviour
 {
     Camera cam;
@@ -23,8 +23,8 @@ public class PlayerInteraction : MonoBehaviour
         cam = Camera.main;
 
         // 생애 주기를 함께할 것이라 별도로 구독 해제는 구현하지 않음
-        PlayerController controller = Player.Instance.inputController;
-        controller.OnInteractEvent += Interact;
+        PlayerInputController input = Player.Instance.inputController;
+        input.OnInteractEvent += Interact;
     }
 
     void Update()
