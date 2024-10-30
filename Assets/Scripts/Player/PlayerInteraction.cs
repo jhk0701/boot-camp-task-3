@@ -33,6 +33,12 @@ public class PlayerInteraction : MonoBehaviour
             return;
         
         lastDetectTime = Time.time;
+        
+        Detect();
+    }
+    
+    void Detect()
+    {
         Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0f));
 
         if (Physics.Raycast(ray, out RaycastHit hit, maxDistance, interactLayerMask))
@@ -67,4 +73,6 @@ public class PlayerInteraction : MonoBehaviour
         }
         
     }
+
+    
 }

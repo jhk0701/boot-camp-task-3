@@ -11,7 +11,6 @@ public class PlatformMover : MonoBehaviour
     [SerializeField] float stopTime = 3f;
 
     WaitForSeconds waitForSec;
-    Transform player;
 
     void Start()
     {

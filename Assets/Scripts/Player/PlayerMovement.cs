@@ -66,21 +66,6 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (Time.time - lastFallingCheck > fallingCheckRate && !isHanging)
-        {
-            lastFallingCheck = Time.time;
-            
-            if (isFalling && IsGrounded())
-            {
-                isFalling = false;
-                OnPlayerLand?.Invoke();
-            }
-            else if(!isFalling && !isJumping && !IsGrounded())
-            {
-                Fall();
-            }
-        }
-
         curState.FixedUpdate();
     }
 

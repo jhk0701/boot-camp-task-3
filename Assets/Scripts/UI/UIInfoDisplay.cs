@@ -36,6 +36,7 @@ public class UIInfoDisplay : MonoBehaviour
             ClearInfo();
             return;
         }
+        
         infoTitleText.text = string.Empty;
         infoDescText.text = String.Format("{0}키를 눌러 {1}.", data.keyToInteract.ToString(), data.ConvertInteractionType(data.type));
     }

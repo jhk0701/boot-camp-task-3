@@ -12,6 +12,7 @@ public class NormalState : IMovementState
 
     public void FixedUpdate()
     {
+        CheckFalling();
         Move();
     }
 
@@ -46,6 +47,24 @@ public class NormalState : IMovementState
 
             Movement.isJumping = true;
             Movement.OnPlayerJump?.Invoke();
+        }
+    }
+
+    public void CheckFalling()
+    {
+        if (Time.time - Movement.lastFallingCheck > Movement.fallingCheckRate)
+        {
+            Movement.lastFallingCheck = Time.time;
+            
+            if (Movement.isFalling && Movement.IsGrounded())
+            {
+                Movement.isFalling = false;
+                Movement.OnPlayerLand?.Invoke();
+            }
+            else if (!Movement.isFalling && !Movement.isJumping && !Movement.IsGrounded())
+            {
+                Movement.Fall();
+            }
         }
     }
 }
